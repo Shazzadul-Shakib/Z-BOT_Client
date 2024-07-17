@@ -16,10 +16,15 @@ import {
   PanelsTopLeft,
   Search,
   WalletMinimal,
+  Sun,
+  Moon,
 } from "lucide-react";
 import logo from "@/assets/logo.svg";
+import useTheme from "@/hooks/useTheme";
 
 const MainLayout = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
@@ -113,6 +118,19 @@ const MainLayout = () => {
               </div>
             </form>
           </div>
+          <Button
+            variant="secondary"
+            size="icon"
+            className="rounded-full"
+            onClick={toggleTheme}
+          >
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
+            <span className="sr-only">Toggle theme</span>
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
