@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -44,7 +44,7 @@ const MainLayout = () => {
                 Dashboard
               </Link>
               <Link
-                to="/"
+                to="/projects"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <PanelsTopLeft className="h-5 w-5" />
@@ -90,7 +90,7 @@ const MainLayout = () => {
                   Dashboard
                 </Link>
                 <Link
-                  to="/"
+                  to="/projects"
                   className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                 >
                   <PanelsTopLeft className="h-5 w-5" />
@@ -147,6 +147,7 @@ const MainLayout = () => {
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           {/* Main page layout here */}
+          <Outlet />
         </main>
       </div>
     </div>
