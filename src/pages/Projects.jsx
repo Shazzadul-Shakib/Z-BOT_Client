@@ -4,7 +4,7 @@ import ProjectCard from "@/components/pages/projects/ProjectCard";
 
 const Projects = () => {
     return (
-      <main className="h-[calc(100vh-100px)] overflow-y-auto">
+      <main className="h-[calc(100vh-100px)] overflow-y-auto hide-scrollbar">
         <section className="grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
           <HeaderCard />
           <HeaderStatsCard />
