@@ -4,13 +4,13 @@ import HeaderAboutCard from "@/components/pages/project/HeaderAboutCard";
 
 const Project = () => {
     return (
-      <div>
+      <div className=" h-[calc(100vh-95px)] overflow-y-auto hide-scrollbar">
         <section className="grid gap-5 ">
           <HeaderAboutCard />
         </section>
-        <section className=" mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          <FeatureCard/>
-          <AddNewFeature/>
+        <section className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ">
+          <FeatureCard />
+          <AddNewFeature />
         </section>
       </div>
     );
