@@ -51,7 +51,7 @@ const MainLayout = () => {
                 Projects
               </Link>
               <Link
-                to="/"
+                to="/project"
                 className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
               >
                 <WalletMinimal className="h-5 w-5" />
@@ -97,7 +97,7 @@ const MainLayout = () => {
                   Projects
                 </Link>
                 <Link
-                  to="/"
+                  to="/project"
                   className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
                 >
                   <WalletMinimal className="h-5 w-5" />

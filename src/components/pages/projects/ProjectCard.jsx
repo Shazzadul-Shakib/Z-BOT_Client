@@ -9,8 +9,8 @@ const ProjectCard = () => {
           <CardHeader className="pb-4">
             <CardTitle className="text-xl">Project Name</CardTitle>
             <CardDescription className="text-xs">
-              <span className="font-semibold">Duration: </span>(July 27 , 2024 -
-              July 30 , 2024)
+              July 27 , 2024 -
+              July 30 , 2024
             </CardDescription>
           </CardHeader>
           <CardContent className="my-2 flex items-center justify-center">
