@@ -37,7 +37,7 @@ const MainLayout = () => {
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <Link
-                to="/"
+                to="/tasks"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Home className="h-5 w-5" />
@@ -83,7 +83,7 @@ const MainLayout = () => {
               </Link>
               <nav className="grid gap-2 text-lg font-medium">
                 <Link
-                  to="/"
+                  to="/tasks"
                   className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                 >
                   <Home className="h-5 w-5" />
