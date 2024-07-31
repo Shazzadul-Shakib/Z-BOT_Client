@@ -1,8 +1,9 @@
-import CreateNewProjectModal from "@/components/modals/CreateNewProjectModal";
 import TaskModules from "@/components/pages/project/TaskModules";
 import MainLayout from "@/layouts/MainLayout";
+import Login from "@/pages/Login";
 import Project from "@/pages/Project";
 import Projects from "@/pages/Projects";
+import Register from "@/pages/Register";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -19,8 +20,12 @@ export const router = createBrowserRouter([
         element: <Project />,
       },
       {
+        path: "/login",
+        element: <Login />,
+      },
+      {
         path: "/tasks",
-        element: <CreateNewProjectModal />,
+        element: <Register />,
       },
     ],
   },
