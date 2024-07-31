@@ -1,3 +1,4 @@
+import CreateNewProjectModal from "@/components/modals/CreateNewProjectModal";
 import TaskModules from "@/components/pages/project/TaskModules";
 import MainLayout from "@/layouts/MainLayout";
 import Project from "@/pages/Project";
@@ -19,7 +20,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/tasks",
-        element: <TaskModules />,
+        element: <CreateNewProjectModal />,
       },
     ],
   },
