@@ -58,9 +58,9 @@ const MainLayout = () => {
                 Projects
               </Link>
               <Link
-                to="/project"
+                to="/finance"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                  pathname === "/project" ? "bg-muted text-primary" : ""
+                  pathname === "/finance" ? "bg-muted text-primary" : ""
                 }`}
               >
                 <WalletMinimal className="h-5 w-5" />

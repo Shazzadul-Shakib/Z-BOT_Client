@@ -11,10 +11,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "../ui/textarea";
 
-const CreateNewProjectModal = () => {
+const CreateNewProjectModal = ({toggleOff}) => {
   return (
-    <div>
-      <Card className="">
+    <div className="mx-4 md:mx-0">
+      <Card>
         <CardHeader>
           <CardTitle className=" mb-2">Create New project</CardTitle>
           <CardDescription className="text-lg font-semibold pb-4">
@@ -37,13 +37,14 @@ const CreateNewProjectModal = () => {
                 <Textarea
                   placeholder="Type your project description here."
                   id="description"
+                  className="w-full h-56 max-h-56 resize-none p-2 border rounded-md"
                 />
               </div>
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button variant="outline">Cancel</Button>
+          <Button onClick={toggleOff} variant="outline">Cancel</Button>
           <Button>Create</Button>
         </CardFooter>
       </Card>

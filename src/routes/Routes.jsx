@@ -1,4 +1,5 @@
 import MainLayout from "@/layouts/MainLayout";
+import Finance from "@/pages/Finance";
 import Login from "@/pages/Login";
 import Project from "@/pages/Project";
 import Projects from "@/pages/Projects";
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/finance",
+        element: <Finance />,
       },
     ],
   },
