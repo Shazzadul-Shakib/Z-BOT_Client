@@ -1,4 +1,3 @@
-import TaskModules from "@/components/pages/project/TaskModules";
 import MainLayout from "@/layouts/MainLayout";
 import Login from "@/pages/Login";
 import Project from "@/pages/Project";
@@ -24,7 +23,7 @@ export const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/tasks",
+        path: "/register",
         element: <Register />,
       },
     ],

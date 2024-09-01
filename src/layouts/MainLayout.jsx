@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -24,6 +24,8 @@ import useTheme from "@/hooks/useTheme";
 
 const MainLayout = () => {
   const { theme, toggleTheme } = useTheme();
+  const {pathname}=useLocation();
+  
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -37,22 +39,29 @@ const MainLayout = () => {
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <Link
-                to="/tasks"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                to="/"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                  pathname === "/" ? "bg-muted text-primary" : ""
+                }`}
               >
                 <Home className="h-5 w-5" />
                 Dashboard
               </Link>
+
               <Link
                 to="/projects"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                  pathname === "/projects" ? "bg-muted text-primary" : ""
+                }`}
               >
                 <PanelsTopLeft className="h-5 w-5" />
                 Projects
               </Link>
               <Link
                 to="/project"
-                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                  pathname === "/project" ? "bg-muted text-primary" : ""
+                }`}
               >
                 <WalletMinimal className="h-5 w-5" />
                 Finance
