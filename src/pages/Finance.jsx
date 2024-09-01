@@ -1,10 +1,10 @@
-import CreateNewProjectModal from "@/components/modals/CreateNewProjectModal";
-import ModalBody from "@/components/modals/modalBody/ModalBody";
+import TaskModules from "@/components/pages/project/TaskModules";
+
 
 const Finance = () => {
     return (
         <div>
-            f
+            <TaskModules/>
         </div>
     );
 };

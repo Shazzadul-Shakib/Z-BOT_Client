@@ -1,10 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Component } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const FeatureCard = () => {
   return (
-    <div>
+    <Link to="/taskmodules">
       <Card className="bg-primary-foreground">
         <CardHeader>
           <CardTitle className="text-center">Feature Name</CardTitle>
@@ -30,7 +31,7 @@ const FeatureCard = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </Link>
   );
 };
 

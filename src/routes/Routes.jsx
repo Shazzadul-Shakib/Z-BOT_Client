@@ -1,3 +1,4 @@
+import TaskModules from "@/components/pages/project/TaskModules";
 import MainLayout from "@/layouts/MainLayout";
 import Finance from "@/pages/Finance";
 import Login from "@/pages/Login";
@@ -23,13 +24,17 @@ export const router = createBrowserRouter([
         path: "/login",
         element: <Login />,
       },
+      // {
+      //   path: "/register",
+      //   element: <Register />,
+      // },
       {
-        path: "/register",
+        path: "/finance",
         element: <Register />,
       },
       {
-        path: "/finance",
-        element: <Finance />,
+        path: "/taskmodules",
+        element: <TaskModules />,
       },
     ],
   },
