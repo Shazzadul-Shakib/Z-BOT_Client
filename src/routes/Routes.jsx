@@ -5,6 +5,7 @@ import Login from "@/pages/Login";
 import Project from "@/pages/Project";
 import Projects from "@/pages/Projects";
 import Register from "@/pages/Register";
+import VerifyOTP from "@/pages/VerifyOTP";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       //   path: "/register",
       //   element: <Register />,
       // },
+      {
+        path: "/verifyotp",
+        element: <VerifyOTP />,
+      },
       {
         path: "/finance",
         element: <Register />,
