@@ -2,25 +2,42 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRegisterUserMutation } from "@/redux/api/users-api";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { setOtp } from "@/redux/slices/otpSlice";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
-  
-    const [passwordShown, setPasswordShown] = useState(false);
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm();
+  const [passwordShown, setPasswordShown] = useState(false);
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const navigate = useNavigate();
 
-    const onSubmit = (data) => console.log(data);
+  // calling api for register user
+  const [registerUser, { isLoading }] =
+    useRegisterUserMutation();
+  const dispatch = useDispatch();
 
-    const togglePasswordVisibility = () => {
-      setPasswordShown(!passwordShown);
-    };
+  // handle submit form and operation to send otp and user to database
+  const onSubmit = async (data) => {
+    const result = await registerUser(data).unwrap();
+    reset();
+    navigate("/verifyotp");
+    if (result) {
+      dispatch(setOtp({ otp: result }));
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setPasswordShown(!passwordShown);
+  };
 
   return (
     <Card className="mx-auto w-[350px] md:w-[400px]">
@@ -88,7 +105,7 @@ const Register = () => {
             )}
           </div>
           <Button type="submit" className="w-full">
-            Create an account
+            {isLoading ? "loading..." : "Create an account"}
           </Button>
         </form>
         <div className="mt-4 text-center text-sm">

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,29 +7,64 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useRegisterUserMutation } from "@/redux/api/users-api";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 const VerifyOTP = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({
     defaultValues: {
       otp: "",
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("OTP Submitted:", data.otp);
-    // Handle OTP submission, e.g., API call
+  // Calling API for register user
+  const [registerUser] = useRegisterUserMutation();
+
+  // Get OTP sent from server to verify
+  const { otp: newOTP } = useSelector((state) => state.otp);
+  console.log("OTP from verify-", newOTP);
+  const userInfo = newOTP?.payload;
+
+  // Watch the OTP input field value
+  const otpValue = watch("otp");
+
+  const onSubmit = async (data) => {
+    // Ensure newOTP and data.otp are defined before comparison
+    if (newOTP?.OTP && Number(data.otp) === newOTP.OTP) {
+      console.log("OTP Matched");
+
+      try {
+        // Send the updated user info with verified status to the server
+        const result = await registerUser({
+          ...userInfo,
+          verified: true,
+        }).unwrap();
+
+        // Check the result and log success or failure
+        if (result) {
+          console.log("Email verified");
+        } else {
+          console.log("Email not verified");
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+      }
+    } else {
+      console.log("OTP did not match or is undefined");
+    }
   };
 
   return (
     <Card className="mx-auto w-[400px]">
       <CardHeader>
         <CardTitle className="w-full text-2xl text-center">
-          Verify-OTP
+          Verify OTP
         </CardTitle>
         <CardDescription className="w-full text-center py-2">
           OTP has been sent to{" "}
@@ -59,13 +93,15 @@ const VerifyOTP = () => {
           <div className="flex flex-col justify-center items-center mt-5">
             <div className="my-3 text-xs">
               <p>
-                Didn't get the OTP?{" "}
+                Didn&apos;t get the OTP?{" "}
                 <span className="text-orange-300 underline cursor-pointer">
                   Resend
                 </span>
               </p>
             </div>
-            <Button type="submit">Verify</Button>
+            <Button type="submit" disabled={otpValue.length !== 4}>
+              Verify
+            </Button>
           </div>
         </form>
       </CardContent>
