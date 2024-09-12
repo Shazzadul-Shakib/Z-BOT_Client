@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { useRegisterUserMutation } from "@/redux/api/users-api";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const VerifyOTP = () => {
   const {
@@ -22,20 +23,19 @@ const VerifyOTP = () => {
       otp: "",
     },
   });
+  const navigate=useNavigate();
 
   // Calling API for register user
-  const [registerUser] = useRegisterUserMutation();
+  const [registerUser,{isLoading}] = useRegisterUserMutation();
 
   // Get OTP sent from server to verify
   const { otp: newOTP } = useSelector((state) => state.otp);
-  console.log("OTP from verify-", newOTP);
   const userInfo = newOTP?.payload;
 
   // Watch the OTP input field value
   const otpValue = watch("otp");
 
   const onSubmit = async (data) => {
-    // Ensure newOTP and data.otp are defined before comparison
     if (newOTP?.OTP && Number(data.otp) === newOTP.OTP) {
       console.log("OTP Matched");
 
@@ -49,6 +49,8 @@ const VerifyOTP = () => {
         // Check the result and log success or failure
         if (result) {
           console.log("Email verified");
+          navigate("/login");
+
         } else {
           console.log("Email not verified");
         }
@@ -100,7 +102,7 @@ const VerifyOTP = () => {
               </p>
             </div>
             <Button type="submit" disabled={otpValue.length !== 4}>
-              Verify
+              {isLoading?"Verifying...":"Verify"}
             </Button>
           </div>
         </form>

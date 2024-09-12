@@ -12,26 +12,30 @@ import { useDispatch } from "react-redux";
 
 const Register = () => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const navigate = useNavigate();
 
   // calling api for register user
-  const [registerUser, { isLoading }] =
-    useRegisterUserMutation();
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
   const dispatch = useDispatch();
 
   // handle submit form and operation to send otp and user to database
   const onSubmit = async (data) => {
-    const result = await registerUser(data).unwrap();
-    reset();
-    navigate("/verifyotp");
-    if (result) {
-      dispatch(setOtp({ otp: result }));
+    try {
+      const result = await registerUser(data).unwrap();
+      // console.log(result)
+      if (result) {
+        dispatch(setOtp({ otp: result?.data }));
+        reset();
+        navigate("/verifyotp");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
