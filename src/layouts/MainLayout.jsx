@@ -21,12 +21,20 @@ import {
 } from "lucide-react";
 import logo from "@/assets/logo.svg";
 import useTheme from "@/hooks/useTheme";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/slices/userSlice";
+import { persistor } from "@/redux/store";
 
 const MainLayout = () => {
   const { theme, toggleTheme } = useTheme();
   const { pathname } = useLocation();
   const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    persistor.purge();
+  };
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -157,7 +165,7 @@ const MainLayout = () => {
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

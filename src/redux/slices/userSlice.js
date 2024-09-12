@@ -11,11 +11,14 @@ const userSlice = createSlice({
     setUser(state, action) {
       state.user = action.payload;
     },
+    logout(state) {
+      state.user = null;
+    },
   },
 });
 
 // Export actions for setting and clearing the OTP
-export const { setUser } = userSlice.actions;
+export const { setUser, logout } = userSlice.actions;
 
 // Export the reducer to include in the store
 export default userSlice.reducer;

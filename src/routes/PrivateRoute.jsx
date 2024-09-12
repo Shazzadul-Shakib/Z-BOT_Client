@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
-  const user = useSelector((state) => state.user); // Fetch user data from Redux store or any global state
+  const user = useSelector((state) => state.user);
 console.log(user.user)
   // Check if user is authenticated
   if ( user.user === null) {

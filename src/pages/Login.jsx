@@ -20,23 +20,19 @@ const Login = () => {
   } = useForm();
   const [loginUser] = useLoginUserMutation();
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setPasswordShown(!passwordShown);
   };
+
   // Handle login form submission
   const onSubmit = async (data) => {
-    // login functionality
-    try {
-      const result = await loginUser(data);
-      if (result?.data?.success) {
-        dispatch(setUser(result?.data?.data));
-        reset();
-        navigate("/");
-      }
-    } catch (error) {
-      console.log(error);
+    const result = await loginUser(data);
+    if (result?.data?.success) {
+      dispatch(setUser(result?.data?.data));
+      reset();
+      navigate("/");
     }
   };
 

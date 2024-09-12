@@ -7,7 +7,7 @@ import Projects from "@/pages/Projects";
 import Register from "@/pages/Register";
 import VerifyOTP from "@/pages/VerifyOTP";
 import { createBrowserRouter } from "react-router-dom";
-import PrivateRoute from "./PrivateRoute"; // Import the PrivateRoute component
+import PrivateRoute from "./PrivateRoute";
 import Project from "@/pages/Project";
 
 export const router = createBrowserRouter([
