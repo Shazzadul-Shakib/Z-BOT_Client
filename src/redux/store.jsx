@@ -13,6 +13,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import { projectsApi } from "./api/projects-api";
 
 // Redux Persist configuration
 const persistConfig = {
@@ -24,6 +25,7 @@ const persistConfig = {
 // Combine reducers
 const rootReducer = combineReducers({
   [usersApi.reducerPath]: usersApi.reducer,
+  [projectsApi.reducerPath]: projectsApi.reducer,
   otp: otpReducer,
   user: userReducer, // Persist this slice
 });
@@ -39,7 +41,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(usersApi.middleware),
+    }).concat(usersApi.middleware,projectsApi.middleware),
 });
 
 // Create a persistor to be used in the app

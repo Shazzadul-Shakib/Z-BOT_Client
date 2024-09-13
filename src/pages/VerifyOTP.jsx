@@ -37,7 +37,6 @@ const VerifyOTP = () => {
 
   const onSubmit = async (data) => {
     if (newOTP?.OTP && Number(data.otp) === newOTP.OTP) {
-      console.log("OTP Matched");
 
       try {
         // Send the updated user info with verified status to the server
@@ -48,7 +47,7 @@ const VerifyOTP = () => {
 
         // Check the result and log success or failure
         if (result) {
-          console.log("Email verified");
+          console.log(result);
           navigate("/login");
 
         } else {
@@ -63,6 +62,7 @@ const VerifyOTP = () => {
   };
 
   return (
+    <div className="h-[100dvh] w-[100dvw] flex justify-center items-center">
     <Card className="mx-auto w-[400px]">
       <CardHeader>
         <CardTitle className="w-full text-2xl text-center">
@@ -70,7 +70,7 @@ const VerifyOTP = () => {
         </CardTitle>
         <CardDescription className="w-full text-center py-2">
           OTP has been sent to{" "}
-          <span className="text-md text-orange-300">abc@mail.com</span>
+          <span className="text-md text-orange-300">{userInfo?.userEmail}</span>
         </CardDescription>
       </CardHeader>
       <CardContent className="w-full flex justify-center">
@@ -108,6 +108,7 @@ const VerifyOTP = () => {
         </form>
       </CardContent>
     </Card>
+    </div>
   );
 };
 

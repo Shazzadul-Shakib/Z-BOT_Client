@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,42 +12,86 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "../ui/textarea";
+import { useSelector } from "react-redux";
+import { useAddProjectMutation } from "@/redux/api/projects-api";
 
-const CreateNewProjectModal = ({toggleOff}) => {
+const CreateNewProjectModal = ({ toggleOff }) => {
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { user } = useSelector((state) => state.user);
+  const [addProject, { isLoading }] = useAddProjectMutation();
+
+  // Submit handler
+  const onSubmit = async (data) => {
+    data.projectOwnerId = user?._id;
+    const result = await addProject(data).unwrap();
+    if (result.success) {
+      reset();
+      toggleOff();
+    }
+  };
+
   return (
     <div className="mx-4 md:mx-0">
       <Card>
         <CardHeader>
-          <CardTitle className=" mb-2">Create New project</CardTitle>
+          <CardTitle className=" mb-2">Create New Project</CardTitle>
           <CardDescription className="text-lg font-semibold pb-4">
             Let&apos;s start with a name and description for your project
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name" className="mb-2">
                   Project Name
                 </Label>
-                <Input id="name" placeholder="Name of your project" />
+                <Input
+                  id="name"
+                  placeholder="Name of your project"
+                  {...register("projectName", {
+                    required: "Project Name is required",
+                  })}
+                />
+                {errors.projectName && (
+                  <p className="text-red-500 text-sm">
+                    {errors.projectName.message}
+                  </p>
+                )}
               </div>
               <div className="grid w-full gap-1.5">
                 <Label htmlFor="description" className="mb-2">
                   Project Description
                 </Label>
                 <Textarea
-                  placeholder="Type your project description here."
                   id="description"
+                  placeholder="Type your project description here."
                   className="w-full h-56 max-h-56 resize-none p-2 border rounded-md"
+                  {...register("projectDescription", {
+                    required: "Project Description is required",
+                  })}
                 />
+                {errors.projectDescription && (
+                  <p className="text-red-500 text-sm">
+                    {errors.projectDescription.message}
+                  </p>
+                )}
               </div>
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button onClick={toggleOff} variant="outline">Cancel</Button>
-          <Button>Create</Button>
+          <Button onClick={toggleOff} variant="outline">
+            Cancel
+          </Button>
+          <Button type="submit" onClick={handleSubmit(onSubmit)}>
+            {isLoading ? "Loading..." : "Create"}
+          </Button>
         </CardFooter>
       </Card>
     </div>

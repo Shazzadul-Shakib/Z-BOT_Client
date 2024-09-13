@@ -44,82 +44,84 @@ const Register = () => {
   };
 
   return (
-    <Card className="mx-auto w-[350px] md:w-[400px]">
-      <CardHeader>
-        <CardTitle className="text-xl mb-2">Sign Up</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="name">User Name</Label>
-            <Input
-              {...register("userName", { required: true })}
-              id="name"
-              placeholder="Enter your name"
-            />
-            {errors.userName && (
-              <span className=" text-xs text-destructive ">
-                Name is required*
-              </span>
-            )}
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              {...register("userEmail", { required: true })}
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-            />
-            {errors.userEmail && (
-              <span className=" text-xs text-destructive ">
-                Email is required*
-              </span>
-            )}
-          </div>
-          <div className="grid gap-2 ">
-            <Label htmlFor="password">Password</Label>
-            <div className="relative">
+    <div className="h-[100dvh] w-[100dvw] flex justify-center items-center">
+      <Card className="mx-auto w-[350px] md:w-[400px]">
+        <CardHeader>
+          <CardTitle className="text-xl mb-2">Sign Up</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="name">User Name</Label>
               <Input
-                {...register("password", {
-                  required: "Password is required*",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters*",
-                  },
-                  maxLength: {
-                    value: 20,
-                    message: "Password must not exceed 20 characters*",
-                  },
-                })}
-                id="password"
-                type={passwordShown ? "text" : "password"}
+                {...register("userName", { required: true })}
+                id="name"
+                placeholder="Enter your name"
               />
-              <div
-                className=" absolute right-3 top-2.5 cursor-pointer"
-                onClick={togglePasswordVisibility}
-              >
-                {passwordShown ? <EyeOff size={20} /> : <Eye size={20} />}
-              </div>
+              {errors.userName && (
+                <span className=" text-xs text-destructive ">
+                  Name is required*
+                </span>
+              )}
             </div>
-            {errors.password && (
-              <span className=" text-xs text-destructive ">
-                {errors.password.message}
-              </span>
-            )}
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                {...register("userEmail", { required: true })}
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+              />
+              {errors.userEmail && (
+                <span className=" text-xs text-destructive ">
+                  Email is required*
+                </span>
+              )}
+            </div>
+            <div className="grid gap-2 ">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Input
+                  {...register("password", {
+                    required: "Password is required*",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters*",
+                    },
+                    maxLength: {
+                      value: 20,
+                      message: "Password must not exceed 20 characters*",
+                    },
+                  })}
+                  id="password"
+                  type={passwordShown ? "text" : "password"}
+                />
+                <div
+                  className=" absolute right-3 top-2.5 cursor-pointer"
+                  onClick={togglePasswordVisibility}
+                >
+                  {passwordShown ? <EyeOff size={20} /> : <Eye size={20} />}
+                </div>
+              </div>
+              {errors.password && (
+                <span className=" text-xs text-destructive ">
+                  {errors.password.message}
+                </span>
+              )}
+            </div>
+            <Button type="submit" className="w-full">
+              {isLoading ? "loading..." : "Create an account"}
+            </Button>
+          </form>
+          <div className="mt-4 text-center text-sm">
+            Already have an account?{" "}
+            <Link to="/login" className="underline">
+              Sign in
+            </Link>
           </div>
-          <Button type="submit" className="w-full">
-            {isLoading ? "loading..." : "Create an account"}
-          </Button>
-        </form>
-        <div className="mt-4 text-center text-sm">
-          Already have an account?{" "}
-          <Link to="/login" className="underline">
-            Sign in
-          </Link>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 export default Register;

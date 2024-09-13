@@ -160,7 +160,10 @@ const MainLayout = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>
-                {user ? user.userName : "None"}
+                <div className="text-center text-orange-300 my-2">
+                  <h1 className=" text-lg font-bold px-2">{user.userName}</h1>
+                  <p className="text-xs px-2">{user.userEmail}</p>
+                </div>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const InitialPage = () => {
     return (
       <div className="h-[100dvh] w-[100dvw] flex justify-center items-center">
-        <div className=" w-1/3 text-center">
+        <div className="w-full mx-2 md:w-1/3 text-center">
           <h1 className="text-5xl leading-[1.2] mb-2">
             Archive your daily life by <br />{" "}
           </h1>
