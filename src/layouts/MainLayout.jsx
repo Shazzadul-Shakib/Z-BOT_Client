@@ -24,16 +24,19 @@ import useTheme from "@/hooks/useTheme";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/slices/userSlice";
 import { persistor } from "@/redux/store";
+import { useLogoutUserMutation } from "@/redux/api/users-api";
 
 const MainLayout = () => {
   const { theme, toggleTheme } = useTheme();
   const { pathname } = useLocation();
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const [logoutUser] = useLogoutUserMutation();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(logout());
     persistor.purge();
+    await logoutUser();
   };
 
   return (

@@ -14,9 +14,15 @@ export const projectsApi = createApi({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["project"],
+    }),
+    getAllProjects: builder.query({
+      query: (ownerUserId) => ({
+        url: `projects/${ownerUserId}`,
+      }),
+      providesTags: ["project"],
     }),
   }),
 });
 
-export const { useAddProjectMutation } = projectsApi;
+export const { useAddProjectMutation,useGetAllProjectsQuery } = projectsApi;

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Card,
   CardContent,
@@ -10,13 +11,15 @@ import { Progress } from "@/components/ui/progress";
 import { CodeXml } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const ProjectCard = ({projectId}) => {
+const ProjectCard = ({projectInfo}) => {
+  console.log(projectInfo)
+  const {_id:id,projectName}=projectInfo;
   return (
-    <Link to={`/projects/${projectId}`} className="block">
+    <Link to={`/projects/${id}`} className="block">
       <main className="cursor-pointer">
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="text-xl">Project Name</CardTitle>
+            <CardTitle className="text-xl">{projectName}</CardTitle>
             <CardDescription className="text-xs">
               July 27, 2024 - July 30, 2024
             </CardDescription>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Card, CardContent } from "@/components/ui/card";
 import {
   ChartContainer,
@@ -6,7 +7,7 @@ import {
 } from "@/components/ui/chart";
 import { Label, Pie, PieChart } from "recharts";
 
-const HeaderStatsCard = () => {
+const HeaderStatsCard = ({projectsNumber}) => {
   const chartData = [
     { projects: "done", visitors: 4, fill: "hsl(var(--chart-1))" },
     { projects: "onGoing", visitors: 1, fill: "hsl(var(--chart-2))" },
@@ -35,7 +36,7 @@ const HeaderStatsCard = () => {
             <div className="grid flex-1 auto-rows-min gap-0.5">
               <div className="text-sm text-muted-foreground">All Projects</div>
               <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
-                5
+                {projectsNumber}
               </div>
             </div>
             <div className="grid flex-1 auto-rows-min gap-0.5">
@@ -85,7 +86,7 @@ const HeaderStatsCard = () => {
                               y={viewBox.cy}
                               className="fill-foreground text-2xl font-bold"
                             >
-                              {"5".toLocaleString()}
+                              {projectsNumber.toLocaleString()}
                             </tspan>
                           </text>
                         );
