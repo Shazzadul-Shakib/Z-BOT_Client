@@ -33,25 +33,20 @@ const MainLayout = () => {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [logoutUser] = useLogoutUserMutation();
-  const {
-    isLoading,
-    error,
-  } = useGetAllProjectsQuery(user?._id);
-
-  
+  const { isLoading, error } = useGetAllProjectsQuery(user?._id);
 
   const handleLogout = async () => {
     dispatch(logout());
     persistor.purge();
     await logoutUser();
   };
-if (error?.status === 401 || error?.status === 403) {
-  handleLogout();
-  console.log(error?.data.message);
-}
- if(isLoading){
-  return <h1>loading...</h1>;
- }
+  if (error?.status === 401 || error?.status === 403) {
+    handleLogout();
+    console.log(error?.data.message);
+  }
+  if (isLoading) {
+    return <h1>loading...</h1>;
+  }
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">

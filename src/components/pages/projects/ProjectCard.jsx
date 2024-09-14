@@ -12,10 +12,9 @@ import { CodeXml } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ProjectCard = ({projectInfo}) => {
-  console.log(projectInfo)
   const {_id:id,projectName}=projectInfo;
   return (
-    <Link to={`/projects/${id}`} className="block">
+    <Link to={`/projects/${id}`} state={{ projectInfo }} className="block">
       <main className="cursor-pointer">
         <Card>
           <CardHeader className="pb-4">
