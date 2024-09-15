@@ -17,8 +17,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useAddNewTaskMutation } from "@/redux/api/projects-api";
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import { MoreVertical, PlusCircle } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useLocation, useParams } from "react-router-dom";
 
 const invoices = [
   {
@@ -30,6 +33,29 @@ const invoices = [
 ];
 
 const TaskModules = () => {
+  const location = useLocation();
+  const featureId = location.state || {};
+  const { projectId } = useParams();
+  const [addNewTask, { isLoading }] = useAddNewTaskMutation();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  // Handle form submission
+  const onSubmit = async (data) => {
+    data.featureId = featureId;
+    data.projectId = projectId;
+    data.completed = false;
+    const result = await addNewTask(data).unwrap();
+    if (result.success) {
+      reset();
+      alert(result.message);
+    }
+  };
   return (
     <Card className="h-[86dvh] relative">
       <div className="overflow-y-auto h-[calc(86dvh-72px)]">
@@ -77,17 +103,31 @@ const TaskModules = () => {
         </Table>
       </div>
       <CardFooter className="absolute bottom-0 left-0 right-0 p-4 bg-primary-foreground">
-        <div className="flex w-full items-center space-x-2">
-          <Input
-            type="text"
-            className="focus-visible:ring-1 py-4"
-            placeholder="Enter Your New Task..."
-          />
-          <Button type="submit" className="gap-2">
-            <PlusCircle className="h-5 w-5" />
-            <span className="hidden md:block">Add Task</span>
-          </Button>
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+          <div className="flex w-full items-center space-x-2">
+            {/* Input field for task with validation */}
+            <Input
+              type="text"
+              className="focus-visible:ring-1 py-4"
+              placeholder="Enter Your New Task..."
+              {...register("task", {
+                required: "Task is required",
+              })}
+            />
+            {errors.task && (
+              <span className="text-red-500 text-xs">
+                {errors.task.message}
+              </span>
+            )}
+
+            <Button type="submit" className="gap-2">
+              <PlusCircle className="h-5 w-5" />
+              <span className="hidden md:block">
+                {isLoading ? "Adding..." : "Add Task"}
+              </span>
+            </Button>
+          </div>
+        </form>
       </CardFooter>
     </Card>
   );

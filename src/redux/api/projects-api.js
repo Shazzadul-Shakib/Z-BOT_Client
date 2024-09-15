@@ -36,6 +36,14 @@ export const projectsApi = createApi({
       }),
       providesTags: ["project"],
     }),
+    addNewTask:builder.mutation({
+      query:(data)=>({
+        url:"projects/features/tasks",
+        method:"POST",
+        body:data
+      }),
+      invalidatesTags:["project"]
+    })
   }),
 });
 
@@ -44,4 +52,5 @@ export const {
   useGetAllProjectsQuery,
   useAddNewFeatureMutation,
   useGetAllFeaturesQuery,
+  useAddNewTaskMutation,
 } = projectsApi;

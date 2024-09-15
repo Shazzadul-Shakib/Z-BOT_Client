@@ -5,11 +5,11 @@ import { CheckCircle, Component } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const FeatureCard = ({ feature }) => {
-  let { featureName, projectId } = feature;
+  let { featureName, projectId,_id } = feature;
   featureName = featureName.charAt(0).toUpperCase() + featureName.slice(1);
 
   return (
-    <Link to={`/projects/${projectId}/taskmodules`}>
+    <Link to={`/projects/${projectId}/taskmodules`} state={_id}>
       <Card className="bg-primary-foreground">
         <CardHeader>
           <CardTitle className="text-center">{featureName}</CardTitle>
