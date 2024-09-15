@@ -17,27 +17,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useAddNewTaskMutation } from "@/redux/api/projects-api";
+import {
+  useAddNewTaskMutation,
+  useGetAllTasksQuery,
+} from "@/redux/api/projects-api";
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import { MoreVertical, PlusCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useLocation, useParams } from "react-router-dom";
-
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-];
 
 const TaskModules = () => {
   const location = useLocation();
   const featureId = location.state || {};
   const { projectId } = useParams();
   const [addNewTask, { isLoading }] = useAddNewTaskMutation();
-
+  const { data } = useGetAllTasksQuery({
+    projectId,
+    featureId,
+  });
+  const alltasks=data?.data;
+  
   const {
     register,
     handleSubmit,
@@ -53,7 +52,6 @@ const TaskModules = () => {
     const result = await addNewTask(data).unwrap();
     if (result.success) {
       reset();
-      alert(result.message);
     }
   };
   return (
@@ -69,15 +67,20 @@ const TaskModules = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
+            {alltasks.map((task) => (
+              <TableRow key={task?._id}>
                 <TableCell className="font-medium">
-                  <Checkbox id={`terms-${invoice.invoice}`} />
+                  <Checkbox
+                    id={`terms-${task?._id}`}
+                    checked={task?.completed}
+                    onCheckedChange={(checked) => {
+                      // Optional: handle logic for updating the task status
+                      console.log(checked, task._id);
+                    }}
+                  />
                 </TableCell>
                 <TableCell className="font-medium">
-                  <Label htmlFor={`terms-${invoice.invoice}`}>
-                    Details about the modular task to be done.
-                  </Label>
+                  <Label htmlFor={`terms-${task?._id}`}>{task?.task}</Label>
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
                   November 23, 2023

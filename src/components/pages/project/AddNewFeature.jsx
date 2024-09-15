@@ -9,7 +9,6 @@ import { PlusCircle } from "lucide-react";
 const AddNewFeature = ({ projectInfo }) => {
   const [isOpen, toggleOn, toggleOff] = useToggle();
   const {_id:projectId}=projectInfo;
-  console.log(projectInfo)
   
   return (
     <div>
