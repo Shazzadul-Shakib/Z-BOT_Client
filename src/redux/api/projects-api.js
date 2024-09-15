@@ -36,21 +36,28 @@ export const projectsApi = createApi({
       }),
       providesTags: ["project"],
     }),
-    addNewTask:builder.mutation({
-      query:(data)=>({
-        url:"projects/features/tasks",
-        method:"POST",
-        body:data
+    addNewTask: builder.mutation({
+      query: (data) => ({
+        url: "projects/features/tasks",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["project"],
+    }),
+    getAllTasks: builder.query({
+      query: ({ projectId, featureId }) => ({
+        url: `projects/features/tasks/${projectId}/${featureId}`,
+      }),
+      providesTags: ["project"],
+    }),
+    updateTaskCompletionStatus: builder.mutation({
+      query: ({data, projectId, featureId, taskId}) => ({
+        url: `projects/features/tasks/${projectId}/${featureId}/${taskId}`,
+        method: "PATCH",
+        body: data,
       }),
       invalidatesTags:["project"],
     }),
-    getAllTasks:builder.query({
-      query:({projectId,featureId})=>({
-        url:`projects/features/tasks/${projectId}/${featureId}`,
-      }),
-      providesTags:["project"],
-    })
-
   }),
 });
 
@@ -61,4 +68,5 @@ export const {
   useGetAllFeaturesQuery,
   useAddNewTaskMutation,
   useGetAllTasksQuery,
+  useUpdateTaskCompletionStatusMutation
 } = projectsApi;

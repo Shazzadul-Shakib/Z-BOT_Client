@@ -20,6 +20,7 @@ import {
 import {
   useAddNewTaskMutation,
   useGetAllTasksQuery,
+  useUpdateTaskCompletionStatusMutation,
 } from "@/redux/api/projects-api";
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import { MoreVertical, PlusCircle } from "lucide-react";
@@ -35,14 +36,27 @@ const TaskModules = () => {
     projectId,
     featureId,
   });
-  const alltasks=data?.data;
-  
+  const alltasks = data?.data;
+
+  const [updateTaskCompletionStatus] = useUpdateTaskCompletionStatusMutation();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+
+  // Handle toggle check
+  const handleToggleCheck = async (taskId, currentStatus) => {
+    const data = { completed: !currentStatus };
+    await updateTaskCompletionStatus({
+      data,
+      projectId,
+      featureId,
+      taskId,
+    });
+  };
 
   // Handle form submission
   const onSubmit = async (data) => {
@@ -67,15 +81,14 @@ const TaskModules = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {alltasks.map((task) => (
+            {alltasks?.map((task) => (
               <TableRow key={task?._id}>
                 <TableCell className="font-medium">
                   <Checkbox
                     id={`terms-${task?._id}`}
                     checked={task?.completed}
-                    onCheckedChange={(checked) => {
-                      // Optional: handle logic for updating the task status
-                      console.log(checked, task._id);
+                    onCheckedChange={() => {
+                      handleToggleCheck(task?._id, task?.completed);
                     }}
                   />
                 </TableCell>
