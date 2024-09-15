@@ -1,14 +1,18 @@
+/* eslint-disable react/prop-types */
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Component } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const FeatureCard = () => {
+const FeatureCard = ({ feature }) => {
+  let { featureName, projectId } = feature;
+  featureName = featureName.charAt(0).toUpperCase() + featureName.slice(1);
+
   return (
-    <Link to="/taskmodules">
+    <Link to={`/projects/${projectId}/taskmodules`}>
       <Card className="bg-primary-foreground">
         <CardHeader>
-          <CardTitle className="text-center">Feature Name</CardTitle>
+          <CardTitle className="text-center">{featureName}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="mb-2">

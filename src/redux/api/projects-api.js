@@ -22,7 +22,26 @@ export const projectsApi = createApi({
       }),
       providesTags: ["project"],
     }),
+    addNewFeature: builder.mutation({
+      query: (data) => ({
+        url: "projects/features",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["project"],
+    }),
+    getAllFeatures: builder.query({
+      query: (projectId) => ({
+        url: `projects/features/${projectId}`,
+      }),
+      providesTags: ["project"],
+    }),
   }),
 });
 
-export const { useAddProjectMutation,useGetAllProjectsQuery } = projectsApi;
+export const {
+  useAddProjectMutation,
+  useGetAllProjectsQuery,
+  useAddNewFeatureMutation,
+  useGetAllFeaturesQuery,
+} = projectsApi;

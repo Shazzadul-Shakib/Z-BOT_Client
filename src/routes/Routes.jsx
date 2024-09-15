@@ -13,22 +13,22 @@ import Project from "@/pages/Project";
 export const router = createBrowserRouter([
   {
     path: "/home",
-    element: <InitialPage />, 
+    element: <InitialPage />,
   },
   {
     path: "/register",
-    element: <Register />, 
+    element: <Register />,
   },
   {
-    path: "verifyotp", 
+    path: "verifyotp",
     element: <VerifyOTP />,
   },
   {
     path: "/login",
-    element: <Login />, 
+    element: <Login />,
   },
   {
-    path: "/", 
+    path: "/",
     element: (
       <PrivateRoute>
         <MainLayout />
@@ -36,21 +36,22 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "projects", 
+        path: "projects",
         element: <Projects />,
       },
       {
-        path: "projects/:projectId", 
+        path: "projects/:projectId",
         element: <Project />,
       },
       {
-        path: "finance", 
-        element: <Finance />,
-      },
-      {
-        path: "taskmodules",
+        path: "projects/:projectId/taskmodules",
         element: <TaskModules />,
       },
+      {
+        path: "finance",
+        element: <Finance />,
+      },
+      
     ],
   },
 ]);
