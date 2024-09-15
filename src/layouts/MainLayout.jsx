@@ -115,21 +115,29 @@ const MainLayout = () => {
               <nav className="grid gap-2 text-lg font-medium">
                 <Link
                   to="/"
-                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    pathname === "/" ? "bg-muted text-primary" : ""
+                  }`}
                 >
                   <Home className="h-5 w-5" />
                   Dashboard
                 </Link>
                 <Link
                   to="/projects"
-                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    pathname.startsWith("/projects")
+                      ? "bg-muted text-primary"
+                      : ""
+                  }`}
                 >
                   <PanelsTopLeft className="h-5 w-5" />
                   Projects
                 </Link>
                 <Link
                   to="/finance"
-                  className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    pathname === "/finance" ? "bg-muted text-primary" : ""
+                  }`}
                 >
                   <WalletMinimal className="h-5 w-5" />
                   Finance

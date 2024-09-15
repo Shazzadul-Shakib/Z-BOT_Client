@@ -96,7 +96,7 @@ const TaskModules = () => {
                   <Label htmlFor={`terms-${task?._id}`}>{task?.task}</Label>
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                  November 23, 2023
+                  {new Date(task.createdAt).toLocaleDateString()}
                 </TableCell>
                 <TableCell className="font-medium text-right">
                   <DropdownMenu>
