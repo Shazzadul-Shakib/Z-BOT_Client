@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 const Projects = () => {
   const {user}=useSelector(state=>state.user);
+  console.log(user);
   const {data:projects,isLoading}=useGetAllProjectsQuery(user?._id);
   if(isLoading){
     return <h1>loading...</h1>;

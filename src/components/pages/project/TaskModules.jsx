@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/table";
 import {
   useAddNewTaskMutation,
+  useDeleteTaskMutation,
   useGetAllTasksQuery,
   useUpdateTaskCompletionStatusMutation,
 } from "@/redux/api/projects-api";
@@ -39,6 +40,7 @@ const TaskModules = () => {
   const alltasks = data?.data;
 
   const [updateTaskCompletionStatus] = useUpdateTaskCompletionStatusMutation();
+  const [deleteTask]=useDeleteTaskMutation();
 
   const {
     register,
@@ -57,6 +59,11 @@ const TaskModules = () => {
       taskId,
     });
   };
+
+  // Handle delete task
+  const handleDeleteTask=async(taskId)=>{
+    await deleteTask({projectId,featureId,taskId});
+  }
 
   // Handle form submission
   const onSubmit = async (data) => {
@@ -107,9 +114,21 @@ const TaskModules = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => {
+                          console.log(task._id);
+                        }}
+                      >
+                        Edit
+                      </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>Delete</DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => {
+                          handleDeleteTask(task._id);
+                        }}
+                      >
+                        Delete
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
