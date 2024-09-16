@@ -4,7 +4,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -114,14 +113,6 @@ const TaskModules = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() => {
-                          console.log(task._id);
-                        }}
-                      >
-                        Edit
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
                       <DropdownMenuItem
                         onClick={() => {
                           handleDeleteTask(task._id);
