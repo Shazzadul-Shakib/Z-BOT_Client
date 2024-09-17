@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { PlusCircle, XCircle, CalendarIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";

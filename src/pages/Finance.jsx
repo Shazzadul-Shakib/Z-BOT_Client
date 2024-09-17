@@ -14,10 +14,10 @@ const Finance = () => {
     return (
       <div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6 ">
-          <TotalAmountCard Icon={CreditCard} Info={Info1} />
-          <TotalAmountCard Icon={HandCoins} Info={Info2} />
-          <TotalAmountCard Icon={Landmark} Info={Info3} />
-          <TotalAmountCard Icon={BadgePercent} Info={Info4} />
+          <TotalAmountCard Icon={CreditCard} Info={Info1} route={"wallet"} />
+          <TotalAmountCard Icon={HandCoins} Info={Info2} route={"expense"}/>
+          <TotalAmountCard Icon={Landmark} Info={Info3} route={"savings"}/>
+          <TotalAmountCard Icon={BadgePercent} Info={Info4} route={"debt"}/>
         </div>
         <div className=" grid grid-cols-1 gap-4 sm:grid-cols-2">
           <ExpenseSummery />

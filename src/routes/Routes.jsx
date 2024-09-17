@@ -9,6 +9,11 @@ import VerifyOTP from "@/pages/VerifyOTP";
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import Project from "@/pages/Project";
+import Wallet from "@/pages/Wallet";
+import FinanceHome from "@/pages/FinanceHome";
+import Expense from "@/pages/Expense";
+import Savings from "@/pages/Savings";
+import Debt from "@/pages/Debt";
 
 export const router = createBrowserRouter([
   {
@@ -49,9 +54,30 @@ export const router = createBrowserRouter([
       },
       {
         path: "finance",
-        element: <Finance />,
+        element: <FinanceHome />,
+        children: [
+          {
+            index: true,
+            element: <Finance />,
+          },
+          {
+            path: "wallet",
+            element: <Wallet />,
+          },
+          {
+            path: "savings",
+            element: <Savings />,
+          },
+          {
+            path: "expense",
+            element: <Expense />,
+          },
+          {
+            path: "debt",
+            element: <Debt />,
+          },
+        ],
       },
-      
     ],
   },
 ]);
