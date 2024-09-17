@@ -2,10 +2,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DollarSign } from "lucide-react";
 
-const TotalAmountCard = ({ Icon,Info }) => {
-    const {bName,balance}=Info;
+const TotalAmountCard = ({ Icon, Info }) => {
+  const { bName, balance } = Info;
+  
   return (
-    <Card>
+    <Card className="p-4">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-xl font-semibold">{bName}</CardTitle>
         {Icon && <Icon className="h-5 w-5 text-orange-300" />}

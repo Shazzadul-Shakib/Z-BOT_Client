@@ -9,6 +9,8 @@ const Finance = () => {
     const Info2={bName:"Total Expense",balance:1000};
     const Info3={bName:"Total Savings",balance:200};
     const Info4={bName:"Total Debt",balance:200};
+    const ExInfo1={bName:"Create New Wallet",info:"Add your seperate income to your new wallet" ,index:1};
+    const ExInfo2={bName:"Add New Expense",info:"Add your expenses from your seperate wallet" ,index:2};
     return (
       <div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6 ">
@@ -20,8 +22,8 @@ const Finance = () => {
         <div className=" grid grid-cols-1 gap-4 sm:grid-cols-2">
           <ExpenseSummery />
           <div className="grid grid-cols-1 gap-4">
-            <AddExpenseCard />
-            <AddExpenseCard />
+            <AddExpenseCard ExInfo={ExInfo1} />
+            <AddExpenseCard ExInfo={ExInfo2} />
           </div>
         </div>
       </div>
