@@ -1,13 +1,11 @@
 /* eslint-disable react/prop-types */
-import AddNewWalletModal from "@/components/modals/AddNewWallet";
 import ModalBody from "@/components/modals/modalBody/ModalBody";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import useToggle from "@/hooks/useToggle";
 import { PlusCircle } from "lucide-react";
 
-const AddNewWalletCard = () => {
-  const [isOpen, toggleOn, toggleOff] = useToggle();
+const AddNewWalletCard = ({ isOpen, toggleOn, toggleOff,ModalCard }) => {
+  
 
   return (
     <div>
@@ -21,13 +19,7 @@ const AddNewWalletCard = () => {
           </Button>
         </CardContent>
       </Card>
-      {isOpen && (
-        <ModalBody
-          modal={
-            <AddNewWalletModal  onClose={toggleOff} />
-          }
-        />
-      )}
+      {isOpen && <ModalBody modal={<ModalCard onClose={toggleOff} />} />}
     </div>
   );
 };
