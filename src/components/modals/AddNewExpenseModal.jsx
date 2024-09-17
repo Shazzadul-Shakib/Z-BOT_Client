@@ -100,7 +100,6 @@ const AddNewExpenseModal = ({ onClose }) => {
                     </span>
                   )}
                 </div>
-
                 {/* Expense Amount */}
                 <div className="w-full">
                   <Input
@@ -124,7 +123,7 @@ const AddNewExpenseModal = ({ onClose }) => {
               </div>
 
               {/* Wallet and Date Picker */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Wallet */}
                 <div className="w-full">
                   <Controller

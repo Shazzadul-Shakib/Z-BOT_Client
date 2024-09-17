@@ -36,23 +36,15 @@ const Expense = () => {
   ] = useToggle();
   return (
     <div>
-      {isAddNewExpenseModalOpen && (
-        <ModalBody
-          modal={<AddNewExpenseModal onClose={toggleAddNewExpenseModalOff} />}
-        />
-      )}
-
-      {/* Expense history */}
-
       <Card>
-        <CardHeader className=" flex-row justify-between mr-4 ">
+        <CardHeader className=" flex-row justify-between mr-0 md:mr-4 ">
           <div>
-            <CardTitle>Expense History - September 2024</CardTitle>
-            <CardDescription className="mt-2">
+            <CardTitle className="text-sm font-normal md:text-2xl md:font-medium">Expense History - September 2024</CardTitle>
+            <CardDescription className="mt-2 text-xs md:text-base">
               Manage your Expenses and view their status.
             </CardDescription>
           </div>
-          <div >
+          <div>
             <Button
               onClick={toggleAddNewExpenseModalOn}
               size="sm"
@@ -65,14 +57,14 @@ const Expense = () => {
             </Button>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="h-[calc(100dvh-207px)] overflow-y-auto hide-scrollbar">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
-                <TableHead>Wallet</TableHead>
+                <TableHead className="hidden md:table-cell">Wallet</TableHead>
                 <TableHead className="hidden md:table-cell">Category</TableHead>
-                <TableHead className="hidden md:table-cell">Price</TableHead>
+                <TableHead>Price</TableHead>
 
                 <TableHead className="hidden md:table-cell">
                   Created at
@@ -82,14 +74,16 @@ const Expense = () => {
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell className="font-medium">
+                <TableCell className="font-normal md:font-medium">
                   Laser Lemonade Machine
                 </TableCell>
-                <TableCell>
-                  <Badge className="px-4 py-2" variant="outline">Tuition</Badge>
+                <TableCell className="hidden md:table-cell">
+                  <Badge className="px-4 py-2" variant="outline">
+                    Tuition
+                  </Badge>
                 </TableCell>
                 <TableCell className="hidden md:table-cell">Food</TableCell>
-                <TableCell className="hidden md:table-cell">$499.99</TableCell>
+                <TableCell>$499.99</TableCell>
                 <TableCell className="hidden md:table-cell">
                   Sept 12 , 2024
                 </TableCell>
@@ -113,6 +107,13 @@ const Expense = () => {
           </Table>
         </CardContent>
       </Card>
+
+      {/* Expense history */}
+      {isAddNewExpenseModalOpen && (
+        <ModalBody
+          modal={<AddNewExpenseModal onClose={toggleAddNewExpenseModalOff} />}
+        />
+      )}
     </div>
   );
 };
