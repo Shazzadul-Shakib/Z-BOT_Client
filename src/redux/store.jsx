@@ -14,6 +14,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import { projectsApi } from "./api/projects-api";
+import { financeApi } from "./api/finance-api";
 
 // Redux Persist configuration
 const persistConfig = {
@@ -26,8 +27,10 @@ const persistConfig = {
 const rootReducer = combineReducers({
   [usersApi.reducerPath]: usersApi.reducer,
   [projectsApi.reducerPath]: projectsApi.reducer,
+  [financeApi.reducerPath]: financeApi.reducer,
+
   otp: otpReducer,
-  user: userReducer, // Persist this slice
+  user: userReducer,
 });
 
 // Apply persistence to the root reducer
@@ -41,7 +44,11 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(usersApi.middleware,projectsApi.middleware),
+    }).concat(
+      usersApi.middleware,
+      projectsApi.middleware,
+      financeApi.middleware,
+    ),
 });
 
 // Create a persistor to be used in the app

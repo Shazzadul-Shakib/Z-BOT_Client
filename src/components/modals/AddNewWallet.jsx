@@ -10,16 +10,25 @@ import {
   CardFooter,
 } from "../ui/card";
 import { useForm } from "react-hook-form";
+import { useAddWalletMutation } from "@/redux/api/finance-api";
 
 const AddNewWalletModal = ({ onClose }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
+  const [addWallet, { isLoading }] = useAddWalletMutation();
+
   const onSubmit = async (data) => {
     console.log(data);
+    const result = await addWallet(data).unwrap();
+    if (result.success) {
+      reset();
+      onClose();
+    }
   };
 
   return (
@@ -77,7 +86,7 @@ const AddNewWalletModal = ({ onClose }) => {
               className="w-full bg-primary text-secondary font-semibold flex items-center gap-1"
             >
               <PlusCircle className="h-5 w-5" />
-              Create Wallet
+              {isLoading ? "Loading..." : "Create Wallet"}
             </Button>
           </CardFooter>
         </form>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PlusCircle } from "lucide-react";
 
-const AddNewWalletCard = ({ isOpen, toggleOn, toggleOff,ModalCard }) => {
+const AddNewWalletCard = ({ bName,isOpen, toggleOn, toggleOff,ModalCard }) => {
   
 
   return (
@@ -14,7 +14,7 @@ const AddNewWalletCard = ({ isOpen, toggleOn, toggleOff,ModalCard }) => {
           <Button size="sm" className="h-8 gap-1 mt-2" onClick={toggleOn}>
             <PlusCircle className="h-5 w-5" />
             <span className="sr-only md:not-sr-only sm:whitespace-nowrap">
-              Add New Wallet
+              {bName}
             </span>
           </Button>
         </CardContent>

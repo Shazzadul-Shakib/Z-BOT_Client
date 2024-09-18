@@ -13,7 +13,13 @@ const Wallet = () => {
         <WalletCard Info={Info1} />
         <WalletCard Info={Info1} />
         <WalletCard Info={Info1} />
-        <AddNewWalletCard isOpen={isWalletCardOpen} toggleOn={toggleWalletCardOn} toggleOff={toggleWalletCardOff} ModalCard={AddNewWalletModal} />
+        <AddNewWalletCard
+          bName={"Add New Wallet"}
+          isOpen={isWalletCardOpen}
+          toggleOn={toggleWalletCardOn}
+          toggleOff={toggleWalletCardOff}
+          ModalCard={AddNewWalletModal}
+        />
       </div>
     );
 };
