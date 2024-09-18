@@ -58,6 +58,10 @@ const AddNewWalletModal = ({ onClose }) => {
                 type="number"
                 {...register("walletBalance", {
                   required: "Wallet balance is required",
+                  min: {
+                    value: 1,
+                    message: "Amount must be greater than zero",
+                  },
                 })}
               />
               {errors.walletBalance && (

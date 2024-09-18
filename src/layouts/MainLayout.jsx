@@ -34,7 +34,7 @@ const MainLayout = () => {
   const dispatch = useDispatch();
   const [logoutUser] = useLogoutUserMutation();
   const { isLoading, error } = useGetAllProjectsQuery(user?._id, {
-    skip: !user?._id, // Skip the query if user is not logged in
+    skip: user==null, // Skip the query if user is not logged in
   });
 
   const handleLogout = async () => {
