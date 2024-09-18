@@ -11,6 +11,7 @@ import {
 } from "../ui/card";
 import { useForm } from "react-hook-form";
 import { useAddWalletMutation } from "@/redux/api/finance-api";
+import { useSelector } from "react-redux";
 
 const AddNewWalletModal = ({ onClose }) => {
   const {
@@ -20,10 +21,13 @@ const AddNewWalletModal = ({ onClose }) => {
     formState: { errors },
   } = useForm();
 
+  const { user } = useSelector((state) => state.user);
+
   const [addWallet, { isLoading }] = useAddWalletMutation();
 
   const onSubmit = async (data) => {
     console.log(data);
+    data.walletOwnerId = user._id;
     const result = await addWallet(data).unwrap();
     if (result.success) {
       reset();

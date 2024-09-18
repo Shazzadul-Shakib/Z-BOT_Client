@@ -10,12 +10,19 @@ export const financeApi = createApi({
   endpoints: (builder) => ({
     addWallet: builder.mutation({
       query: (data) => ({
-        url: "finance",
+        url: "finance/wallets",
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["wallet"],
+    }),
+    getAllWallet: builder.query({
+      query: (walletOwnerId) => ({
+        url: `finance/wallets/${walletOwnerId}`,
+      }),
+      providesTags: ["wallet"],
     }),
   }),
 });
 
-export const { useAddWalletMutation } = financeApi;
+export const { useAddWalletMutation, useGetAllWalletQuery } = financeApi;
