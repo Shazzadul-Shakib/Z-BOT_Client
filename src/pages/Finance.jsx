@@ -1,27 +1,43 @@
 import AddExpenseCard from "@/components/pages/finance/AddExpenseCard";
 import ExpenseSummery from "@/components/pages/finance/ExpenseSummery";
 import TotalAmountCard from "@/components/pages/finance/TotalAmountCard";
-import { useGetAllWalletQuery } from "@/redux/api/finance-api";
+import {
+  useGetAllExpenseQuery,
+  useGetAllWalletQuery,
+} from "@/redux/api/finance-api";
 import { CreditCard, HandCoins, Landmark, BadgePercent } from "lucide-react";
 import { useSelector } from "react-redux";
 
 const Finance = () => {
   const { user } = useSelector((state) => state.user);
-  
+
   const { data: allWalletsResponse, isLoading } = useGetAllWalletQuery(
     user._id
   );
+  const { data: allExpensesResponse, isLoading: expenseIsLoading } =
+    useGetAllExpenseQuery(user._id);
+
+  if (isLoading || expenseIsLoading) {
+    return <h1>Loading...</h1>;
+  }
+  const allExpenses = allExpensesResponse?.data ?? [];
   const allWallets = allWalletsResponse?.data ?? [];
+
+  // Add total balance
   const totalWalletBalance = allWallets.reduce((sum, wallet) => {
     const balance = wallet?.walletBalance;
-
-    // Add to sum only if balance is a valid finite number
     return sum + (Number.isFinite(balance) ? balance : 0);
   }, 0);
 
-  console.log(totalWalletBalance);
+  // Add total expense
+  const totalExpenseAmount = allExpenses.reduce((sum, expenseItem) => {
+    const expense = expenseItem?.expenseAmount;
+    return sum + (Number.isFinite(expense) ? expense : 0);
+  }, 0);
+
+  console.log(totalExpenseAmount);
   const Info1 = { bName: "Total Balance", balance: totalWalletBalance };
-  const Info2 = { bName: "Total Expense", balance: 1000 };
+  const Info2 = { bName: "Total Expense", balance: totalExpenseAmount };
   const Info3 = { bName: "Total Savings", balance: 200 };
   const Info4 = { bName: "Total Debt", balance: 200 };
   const ExInfo1 = {
@@ -35,9 +51,6 @@ const Finance = () => {
     index: 2,
   };
 
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
   return (
     <div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6 ">

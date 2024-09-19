@@ -25,12 +25,23 @@ export const financeApi = createApi({
     addNewExpense: builder.mutation({
       query: ({ ownerUserId, data }) => ({
         url: `finance/expenses/${ownerUserId}`,
-        method:"POST",
+        method: "POST",
         body: data,
       }),
       invalidatesTags: ["wallet", "expense"],
     }),
+    getAllExpense: builder.query({
+      query: (ownerUserId) => ({
+        url: `finance/expenses/${ownerUserId}`,
+      }),
+      providesTags: ["wallet", "expense"],
+    }),
   }),
 });
 
-export const { useAddWalletMutation, useGetAllWalletQuery,useAddNewExpenseMutation } = financeApi;
+export const {
+  useAddWalletMutation,
+  useGetAllWalletQuery,
+  useAddNewExpenseMutation,
+  useGetAllExpenseQuery,
+} = financeApi;

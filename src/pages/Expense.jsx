@@ -25,21 +25,36 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useToggle from "@/hooks/useToggle";
+import { useGetAllExpenseQuery } from "@/redux/api/finance-api";
 import { PlusCircle } from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const Expense = () => {
+  const {user}=useSelector(state=>state.user);
+  const { data: allExpensesResponse, isLoading } = useGetAllExpenseQuery(
+    user._id
+  );
   const [
     isAddNewExpenseModalOpen,
     toggleAddNewExpenseModalOn,
     toggleAddNewExpenseModalOff,
   ] = useToggle();
+
+  const allExpenses=allExpensesResponse?.data;
+
+
+  if(isLoading){
+    return <h1>Loading...</h1>
+  }
   return (
     <div>
       <Card>
         <CardHeader className=" flex-row justify-between mr-0 md:mr-4 ">
           <div>
-            <CardTitle className="text-sm font-normal md:text-2xl md:font-medium">Expense History - September 2024</CardTitle>
+            <CardTitle className="text-sm font-normal md:text-2xl md:font-medium">
+              Expense History - September 2024
+            </CardTitle>
             <CardDescription className="mt-2 text-xs md:text-base">
               Manage your Expenses and view their status.
             </CardDescription>
@@ -73,36 +88,44 @@ const Expense = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-normal md:font-medium">
-                  Laser Lemonade Machine
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  <Badge className="px-4 py-2" variant="outline">
-                    Tuition
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">Food</TableCell>
-                <TableCell>$499.99</TableCell>
-                <TableCell className="hidden md:table-cell">
-                  Sept 12 , 2024
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button aria-haspopup="true" size="icon" variant="ghost">
-                        <MoreHorizontal className="h-4 w-4" />
-                        <span className="sr-only">Toggle menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem>Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
+              {allExpenses.map((item) => (
+                <TableRow key={item._id}>
+                  <TableCell className="font-normal md:font-medium">
+                    {item.expenseName}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    <Badge className="px-4 py-2" variant="outline">
+                      {item.walletName}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {item.expenseCategory}
+                  </TableCell>
+                  <TableCell>${item.expenseAmount}</TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {item.expenseDate}
+                  </TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          aria-haspopup="true"
+                          size="icon"
+                          variant="ghost"
+                        >
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Toggle menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>

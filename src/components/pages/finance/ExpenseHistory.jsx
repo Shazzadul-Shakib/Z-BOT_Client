@@ -15,7 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
- const ExpenseHistory=()=> {
+const ExpenseHistory = () => {
   return (
     <Card>
       <CardHeader className="px-7">
@@ -29,7 +29,7 @@ import {
               <TableHead>Customer</TableHead>
               <TableHead className="hidden sm:table-cell">Type</TableHead>
               <TableHead className="hidden sm:table-cell">Status</TableHead>
-              <TableHead className="hidden md:table-cell">Date</TableHead>
+              <TableHead className="hidden sm:table-cell">Date</TableHead>
               <TableHead className="text-right">Amount</TableHead>
             </TableRow>
           </TableHeader>
@@ -47,7 +47,7 @@ import {
                   Fulfilled
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell">2023-06-23</TableCell>
+              <TableCell className="hidden sm:table-cell">2023-06-23</TableCell>
               <TableCell className="text-right">$250.00</TableCell>
             </TableRow>
             <TableRow>
@@ -63,7 +63,7 @@ import {
                   Declined
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell">2023-06-24</TableCell>
+              <TableCell className="hidden sm:table-cell">2023-06-24</TableCell>
               <TableCell className="text-right">$150.00</TableCell>
             </TableRow>
             <TableRow>
@@ -81,7 +81,7 @@ import {
                   Fulfilled
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell">2023-06-25</TableCell>
+              <TableCell className="hidden sm:table-cell">2023-06-25</TableCell>
               <TableCell className="text-right">$350.00</TableCell>
             </TableRow>
             <TableRow>
@@ -97,7 +97,7 @@ import {
                   Fulfilled
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell">2023-06-26</TableCell>
+              <TableCell className="hidden sm:table-cell">2023-06-26</TableCell>
               <TableCell className="text-right">$450.00</TableCell>
             </TableRow>
             <TableRow>
@@ -113,7 +113,7 @@ import {
                   Fulfilled
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell">2023-06-23</TableCell>
+              <TableCell className="hidden sm:table-cell">2023-06-23</TableCell>
               <TableCell className="text-right">$250.00</TableCell>
             </TableRow>
             <TableRow>
@@ -129,7 +129,7 @@ import {
                   Fulfilled
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell">2023-06-23</TableCell>
+              <TableCell className="hidden sm:table-cell">2023-06-23</TableCell>
               <TableCell className="text-right">$250.00</TableCell>
             </TableRow>
             <TableRow>
@@ -145,7 +145,7 @@ import {
                   Declined
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell">2023-06-24</TableCell>
+              <TableCell className="hidden sm:table-cell">2023-06-24</TableCell>
               <TableCell className="text-right">$150.00</TableCell>
             </TableRow>
             <TableRow>
@@ -161,7 +161,7 @@ import {
                   Fulfilled
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell">2023-06-26</TableCell>
+              <TableCell className="hidden sm:table-cell">2023-06-26</TableCell>
               <TableCell className="text-right">$450.00</TableCell>
             </TableRow>
           </TableBody>
@@ -169,6 +169,6 @@ import {
       </CardContent>
     </Card>
   );
-}
+};
 
 export default ExpenseHistory;
