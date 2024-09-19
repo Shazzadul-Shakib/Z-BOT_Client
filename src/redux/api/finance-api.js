@@ -6,7 +6,7 @@ export const financeApi = createApi({
     baseUrl: `${import.meta.env.VITE_BASE_URL}/api/v1`,
     credentials: "include",
   }),
-  tagTypes: ["wallet", "expense"],
+  tagTypes: ["wallet", "expense", "savings"],
   endpoints: (builder) => ({
     addWallet: builder.mutation({
       query: (data) => ({
@@ -28,13 +28,41 @@ export const financeApi = createApi({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["wallet", "expense"],
+      invalidatesTags: ["wallet", "expense", "savings", "debt"],
     }),
     getAllExpense: builder.query({
       query: (ownerUserId) => ({
         url: `finance/expenses/${ownerUserId}`,
       }),
       providesTags: ["wallet", "expense"],
+    }),
+    getAllSavings: builder.query({
+      query: (ownerUserId) => ({
+        url: `finance/savings/${ownerUserId}`,
+      }),
+      providesTags: ["wallet", "savings"],
+    }),
+    addNewDebt: builder.mutation({
+      query: ({ ownerUserId, data }) => ({
+        url: `finance/debts/${ownerUserId}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["debt"],
+    }),
+    getAllDebt: builder.query({
+      query: (ownerUserId) => ({
+        url: `finance/debts/${ownerUserId}`,
+      }),
+      providesTags: ["debt"],
+    }),
+    updateDebtPaidStatus: builder.mutation({
+      query: ({ownerUserId,debtId,data}) => ({
+        url: `finance/debts/${ownerUserId}/${debtId}`,
+        method:"PATCH",
+        body:data
+      }),
+      invalidatesTags: ["debt"],
     }),
   }),
 });
@@ -44,4 +72,8 @@ export const {
   useGetAllWalletQuery,
   useAddNewExpenseMutation,
   useGetAllExpenseQuery,
+  useGetAllSavingsQuery,
+  useAddNewDebtMutation,
+  useGetAllDebtQuery,
+  useUpdateDebtPaidStatusMutation
 } = financeApi;

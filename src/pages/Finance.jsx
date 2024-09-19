@@ -2,7 +2,9 @@ import AddExpenseCard from "@/components/pages/finance/AddExpenseCard";
 import ExpenseSummery from "@/components/pages/finance/ExpenseSummery";
 import TotalAmountCard from "@/components/pages/finance/TotalAmountCard";
 import {
+  useGetAllDebtQuery,
   useGetAllExpenseQuery,
+  useGetAllSavingsQuery,
   useGetAllWalletQuery,
 } from "@/redux/api/finance-api";
 import { CreditCard, HandCoins, Landmark, BadgePercent } from "lucide-react";
@@ -16,12 +18,18 @@ const Finance = () => {
   );
   const { data: allExpensesResponse, isLoading: expenseIsLoading } =
     useGetAllExpenseQuery(user._id);
+  const { data: allSavingsResponse, isLoading: savingsIsLoading } =
+    useGetAllSavingsQuery(user._id);
+  const { data: allDebtResponse, isLoading: debtIsLoading } =
+    useGetAllDebtQuery(user._id);
 
-  if (isLoading || expenseIsLoading) {
+  if (isLoading || expenseIsLoading || savingsIsLoading || debtIsLoading) {
     return <h1>Loading...</h1>;
   }
   const allExpenses = allExpensesResponse?.data ?? [];
   const allWallets = allWalletsResponse?.data ?? [];
+  const allSavings = allSavingsResponse?.data ?? [];
+  const allDebts = allDebtResponse?.data ?? [];
 
   // Add total balance
   const totalWalletBalance = allWallets.reduce((sum, wallet) => {
@@ -35,11 +43,22 @@ const Finance = () => {
     return sum + (Number.isFinite(expense) ? expense : 0);
   }, 0);
 
-  console.log(totalExpenseAmount);
+  // Add total expense
+  const totalSavingsAmount = allSavings.reduce((sum, savingsItem) => {
+    const savings = savingsItem?.expenseAmount;
+    return sum + (Number.isFinite(savings) ? savings : 0);
+  }, 0);
+
+  // Add total expense
+  const totalDebtsAmount = allDebts.reduce((sum, debtItem) => {
+    const debt = debtItem?.debtAmount;
+    return sum + (Number.isFinite(debt) ? debt : 0);
+  }, 0);
+
   const Info1 = { bName: "Total Balance", balance: totalWalletBalance };
   const Info2 = { bName: "Total Expense", balance: totalExpenseAmount };
-  const Info3 = { bName: "Total Savings", balance: 200 };
-  const Info4 = { bName: "Total Debt", balance: 200 };
+  const Info3 = { bName: "Total Savings", balance: totalSavingsAmount };
+  const Info4 = { bName: "Total Debt", balance: totalDebtsAmount };
   const ExInfo1 = {
     bName: "Create New Wallet",
     info: "Add your seperate income to your new wallet",

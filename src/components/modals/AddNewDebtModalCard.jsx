@@ -15,18 +15,36 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { useState } from "react";
 import { format } from "date-fns";
+import { useSelector } from "react-redux";
+import { useAddNewDebtMutation } from "@/redux/api/finance-api";
 
 const AddNewDebtModal = ({ onClose }) => {
+  const { user } = useSelector((state) => state.user);
+  const [addNewDebt, { isLoading }] = useAddNewDebtMutation();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
     control,
   } = useForm();
   const [isOpen, setIsOpen] = useState(false);
 
-  const onSubmit = (data) => {
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
+  const onSubmit = async (data) => {
+    data.debtPaid = false;
+    data.debtDate = new Date(data.debtDate).toLocaleDateString();
+    data.ownerUserId = user._id;
     console.log(data);
+    const result = await addNewDebt({ ownerUserId: user._id, data }).unwrap();
+    if (result.success) {
+      reset();
+      onClose();
+    }
   };
 
   return (
@@ -86,7 +104,7 @@ const AddNewDebtModal = ({ onClose }) => {
                 {/* Date Picker */}
                 <div className="w-full">
                   <Controller
-                    name="expenseDate"
+                    name="debtDate"
                     control={control}
                     rules={{ required: "Date is required" }}
                     render={({ field }) => (
@@ -111,7 +129,7 @@ const AddNewDebtModal = ({ onClose }) => {
                             selected={field.value}
                             onSelect={(date) => {
                               field.onChange(date);
-                              setIsOpen(false); // Close the popover when a date is selected
+                              setIsOpen(false);
                             }}
                             initialFocus
                           />
@@ -119,9 +137,9 @@ const AddNewDebtModal = ({ onClose }) => {
                       </Popover>
                     )}
                   />
-                  {errors.expenseDate && (
+                  {errors.debtDate && (
                     <span className="text-red-500 text-xs mt-2">
-                      {errors.expenseDate.message}
+                      {errors.debtDate.message}
                     </span>
                   )}
                 </div>

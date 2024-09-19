@@ -13,7 +13,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
@@ -26,15 +25,35 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useToggle from "@/hooks/useToggle";
+import {
+  useGetAllDebtQuery,
+  useUpdateDebtPaidStatusMutation,
+} from "@/redux/api/finance-api";
 import { PlusCircle } from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const Debt = () => {
+  const { user } = useSelector((state) => state.user);
+  const { data: allDebtResponse, isLoading } = useGetAllDebtQuery(user._id);
+  const [updateDebtPaidStatus] = useUpdateDebtPaidStatusMutation();
   const [
-    isAddNewExpenseModalOpen,
-    toggleAddNewExpenseModalOn,
-    toggleAddNewExpenseModalOff,
+    isAddNewDebtModalOpen,
+    toggleAddNewDebtModalOn,
+    toggleAddNewDebtModalOff,
   ] = useToggle();
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
+  const alldebts = allDebtResponse?.data ?? [];
+
+  const handleToggleCheck = async (debtId, currentStatus) => {
+    const data = { debtPaid: !currentStatus };
+    await updateDebtPaidStatus({ ownerUserId: user._id, debtId, data });
+  };
+
   return (
     <div>
       <Card>
@@ -49,7 +68,7 @@ const Debt = () => {
           </div>
           <div>
             <Button
-              onClick={toggleAddNewExpenseModalOn}
+              onClick={toggleAddNewDebtModalOn}
               size="sm"
               className="h-8 gap-1"
             >
@@ -75,48 +94,52 @@ const Debt = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-normal md:font-medium">
-                  <Checkbox
-                    id={`termsDebt`}
-                    // checked={task?.completed}
-                    // onCheckedChange={() => {
-                    //   handleToggleCheck(task?._id, task?.completed);
-                    // }}
-                  />
-                </TableCell>
-                <TableCell className="font-normal md:font-medium">
-                  <Label htmlFor={`termsDebt`}>Laser Lemonade Machine</Label>
-                </TableCell>
-                <TableCell>$499.99</TableCell>
-                <TableCell className="hidden md:table-cell">
-                  Sept 12 , 2024
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button aria-haspopup="true" size="icon" variant="ghost">
-                        <MoreHorizontal className="h-4 w-4" />
-                        <span className="sr-only">Toggle menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem>Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
+              {alldebts.map((debt) => (
+                <TableRow key={debt._id}>
+                  <TableCell className="font-normal md:font-medium">
+                    <Checkbox
+                      id={`termsDebt`}
+                      checked={debt?.debtPaid}
+                      onCheckedChange={() => {
+                        handleToggleCheck(debt?._id, debt?.debtPaid);
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell className="font-normal md:font-medium">
+                    <Label htmlFor={`termsDebt`}>{debt.debtOwnerName}</Label>
+                  </TableCell>
+                  <TableCell>${debt.debtAmount}</TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {debt.debtDate}
+                  </TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          aria-haspopup="true"
+                          size="icon"
+                          variant="ghost"
+                        >
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Toggle menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>
       </Card>
 
       {/* Expense history */}
-      {isAddNewExpenseModalOpen && (
+      {isAddNewDebtModalOpen && (
         <ModalBody
-          modal={<AddNewDebtModal onClose={toggleAddNewExpenseModalOff} />}
+          modal={<AddNewDebtModal onClose={toggleAddNewDebtModalOff} />}
         />
       )}
     </div>
