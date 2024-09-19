@@ -22,8 +22,17 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { useState } from "react";
 import { format } from "date-fns";
+import { useSelector } from "react-redux";
+import { useGetAllWalletQuery } from "@/redux/api/finance-api";
+import { Link, useNavigate } from "react-router-dom";
 
 const AddNewExpenseModal = ({ onClose }) => {
+  const { user } = useSelector((state) => state.user);
+  const { data: allWalletsResponse, isLoading } = useGetAllWalletQuery(
+    user._id
+  );
+  const allWallets = allWalletsResponse?.data ?? [];
+
   const {
     register,
     handleSubmit,
@@ -31,11 +40,32 @@ const AddNewExpenseModal = ({ onClose }) => {
     control,
   } = useForm();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate=useNavigate();
+
+  const categories = [
+    { id: 1, cValue: "Residence", category: "Residence" },
+    { id: 2, cValue: "Food", category: "Food" },
+    { id: 3, cValue: "Vehicle", category: "Vehicle" },
+    { id: 4, cValue: "Mobile", category: "Mobile" },
+    { id: 5, cValue: "Shopping", category: "Shopping" },
+    { id: 6, cValue: "Education", category: "Education" },
+    { id: 7, cValue: "Savings", category: "Savings" },
+    { id: 8, cValue: "Debt", category: "Debt" },
+    { id: 9, cValue: "Others", category: "Others" },
+  ];
 
   const onSubmit = (data) => {
-    console.log(data);
+    const [walletName, walletId] = data.expenseWallet.split("|");
+    data.walletName = walletName;
+    data.walletId = walletId;
+    data.ownerUserId=user._id;
+    data.expenseDate = new Date(data.expenseDate).toLocaleDateString();
+    console.log(typeof data.expenseDate);
   };
 
+  if (isLoading) {
+    return <h1>Loading....</h1>;
+  }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-full max-w-3xl mx-4 md:mx-0 md:w-[50%]">
@@ -87,9 +117,11 @@ const AddNewExpenseModal = ({ onClose }) => {
                           <SelectValue placeholder="Select Category" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="draft">Draft</SelectItem>
-                          <SelectItem value="published">Active</SelectItem>
-                          <SelectItem value="archived">Archived</SelectItem>
+                          {categories.map((item) => (
+                            <SelectItem key={item.id} value={item.cValue}>
+                              {item.category}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     )}
@@ -131,7 +163,15 @@ const AddNewExpenseModal = ({ onClose }) => {
                     control={control}
                     rules={{ required: "Wallet is required" }}
                     render={({ field }) => (
-                      <Select onValueChange={field.onChange}>
+                      <Select
+                        onValueChange={(value) => {
+                          if (value === "add wallet") {
+                            navigate("/finance/wallet");
+                          } else {
+                            field.onChange(value);
+                          }
+                        }}
+                      >
                         <SelectTrigger
                           className="w-full p-6"
                           aria-label="Select Wallet"
@@ -139,9 +179,23 @@ const AddNewExpenseModal = ({ onClose }) => {
                           <SelectValue placeholder="Select Wallet" />
                         </SelectTrigger>
                         <SelectContent className="w-full">
-                          <SelectItem value="wallet1">Wallet 1</SelectItem>
-                          <SelectItem value="wallet2">Wallet 2</SelectItem>
-                          <SelectItem value="wallet3">Wallet 3</SelectItem>
+                          {allWallets.length > 0 ? (
+                            allWallets.map((wallet) => (
+                              <SelectItem
+                                key={wallet._id}
+                                value={`${wallet.walletName}|${wallet._id}`}
+                              >
+                                {wallet.walletName}
+                              </SelectItem>
+                            ))
+                          ) : (
+                            <SelectItem
+                              value="add wallet"
+                              className="cursor-pointer"
+                            >
+                              <Link to="finance/wallet">Add Wallet</Link>
+                            </SelectItem>
+                          )}
                         </SelectContent>
                       </Select>
                     )}
@@ -181,7 +235,7 @@ const AddNewExpenseModal = ({ onClose }) => {
                             selected={field.value}
                             onSelect={(date) => {
                               field.onChange(date);
-                              setIsOpen(false); // Close the popover when a date is selected
+                              setIsOpen(false);
                             }}
                             initialFocus
                           />
