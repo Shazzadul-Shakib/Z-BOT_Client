@@ -23,7 +23,10 @@ import { Calendar } from "../ui/calendar";
 import { useState } from "react";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
-import { useGetAllWalletQuery } from "@/redux/api/finance-api";
+import {
+  useAddNewExpenseMutation,
+  useGetAllWalletQuery,
+} from "@/redux/api/finance-api";
 import { Link, useNavigate } from "react-router-dom";
 
 const AddNewExpenseModal = ({ onClose }) => {
@@ -36,11 +39,14 @@ const AddNewExpenseModal = ({ onClose }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
     control,
   } = useForm();
   const [isOpen, setIsOpen] = useState(false);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const [addNewExpense, { isLoading: expenseIsLoading }] =
+    useAddNewExpenseMutation();
 
   const categories = [
     { id: 1, cValue: "Residence", category: "Residence" },
@@ -54,16 +60,27 @@ const AddNewExpenseModal = ({ onClose }) => {
     { id: 9, cValue: "Others", category: "Others" },
   ];
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const [walletName, walletId] = data.expenseWallet.split("|");
     data.walletName = walletName;
     data.walletId = walletId;
-    data.ownerUserId=user._id;
+    data.ownerUserId = user._id;
     data.expenseDate = new Date(data.expenseDate).toLocaleDateString();
     console.log(typeof data.expenseDate);
+    const result = await addNewExpense({
+      ownerUserId: user._id,
+      data,
+    }).unwrap();
+    if (result.success) {
+      console.log(result.message);
+      reset();
+      onClose();
+    } else {
+      alert(result.message);
+    }
   };
 
-  if (isLoading) {
+  if (isLoading || expenseIsLoading) {
     return <h1>Loading....</h1>;
   }
   return (

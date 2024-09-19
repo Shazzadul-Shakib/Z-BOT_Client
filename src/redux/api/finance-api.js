@@ -6,7 +6,7 @@ export const financeApi = createApi({
     baseUrl: `${import.meta.env.VITE_BASE_URL}/api/v1`,
     credentials: "include",
   }),
-  tagTypes: ["wallet"],
+  tagTypes: ["wallet", "expense"],
   endpoints: (builder) => ({
     addWallet: builder.mutation({
       query: (data) => ({
@@ -20,9 +20,17 @@ export const financeApi = createApi({
       query: (walletOwnerId) => ({
         url: `finance/wallets/${walletOwnerId}`,
       }),
-      providesTags: ["wallet"],
+      providesTags: ["wallet", "expense"],
+    }),
+    addNewExpense: builder.mutation({
+      query: ({ ownerUserId, data }) => ({
+        url: `finance/expenses/${ownerUserId}`,
+        method:"POST",
+        body: data,
+      }),
+      invalidatesTags: ["wallet", "expense"],
     }),
   }),
 });
 
-export const { useAddWalletMutation, useGetAllWalletQuery } = financeApi;
+export const { useAddWalletMutation, useGetAllWalletQuery,useAddNewExpenseMutation } = financeApi;
