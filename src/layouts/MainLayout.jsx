@@ -34,21 +34,23 @@ const MainLayout = () => {
   const dispatch = useDispatch();
   const [logoutUser] = useLogoutUserMutation();
   const { isLoading, error } = useGetAllProjectsQuery(user?._id, {
-    skip: user==null, // Skip the query if user is not logged in
+    skip: user === null,
   });
 
+  if (isLoading) {
+    return <h1>loading...</h1>;
+  }
   const handleLogout = async () => {
     dispatch(logout());
-    persistor.purge();
+    await persistor.purge();
     await logoutUser();
   };
+
   if (error?.status === 401 || error?.status === 403) {
     handleLogout();
     console.log(error?.data.message);
   }
-  if (isLoading) {
-    return <h1>loading...</h1>;
-  }
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
@@ -84,9 +86,7 @@ const MainLayout = () => {
               <Link
                 to="/finance"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                  pathname.startsWith("/finance")
-                    ? "bg-muted text-primary"
-                    : ""
+                  pathname.startsWith("/finance") ? "bg-muted text-primary" : ""
                 }`}
               >
                 <WalletMinimal className="h-5 w-5" />

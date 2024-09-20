@@ -1,65 +1,75 @@
 /* eslint-disable react/prop-types */
-import { Bar, BarChart, CartesianGrid, Rectangle, XAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, Rectangle, XAxis } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
-
-export const description = "A bar chart with an active bar"
-
-const chartData = [
-  { browser: "chrome", visitors: 187, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 275, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" },
-]
+} from "@/components/ui/chart";
 
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
+  residence: {
+    label: "Residence",
     color: "hsl(var(--chart-1))",
   },
-  safari: {
-    label: "Safari",
+  food: {
+    label: "Food",
     color: "hsl(var(--chart-2))",
   },
-  firefox: {
-    label: "Firefox",
+  vehicle: {
+    label: "Vehicle",
     color: "hsl(var(--chart-3))",
   },
-  edge: {
-    label: "Edge",
+  mobile: {
+    label: "Mobile",
     color: "hsl(var(--chart-4))",
   },
-  fedge: {
-    label: "g",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
+  shopping: {
+    label: "Shopping",
     color: "hsl(var(--chart-5))",
   },
-}
+  education: {
+    label: "Education",
+    color: "hsl(var(--chart-6))",
+  },
+  debt: {
+    label: "Debt",
+    color: "hsl(var(--chart-3))",
+  },
+  savings: {
+    label: "Savings",
+    color: "hsl(var(--chart-2))",
+  },
+  others: {
+    label: "Others",
+    color: "hsl(var(--chart-1))",
+  },
+};
 
-const ExpenseSummery=()=> {
+const ExpenseSummery = ({ Info }) => {
+  // Reduce Info array to sum up visitors by category
+  const summedData = Info.reduce((acc, item) => {
+    const category = item.expenseCategory.toLowerCase();
+    if (!acc[category]) {
+      acc[category] = { category, expenseAmount: 0 };
+    }
+    acc[category].expenseAmount += item.expenseAmount;
+    return acc;
+  }, {});
+
+  // Create chartData ensuring all categories from chartConfig are included
+  const chartData = Object.keys(chartConfig).map((categoryKey) => ({
+    category: categoryKey,
+    amount: summedData[categoryKey]?.expenseAmount || 0,
+    fill: chartConfig[categoryKey]?.color || "var(--color-default)",
+  }));
+
   return (
     <Card>
       <CardHeader className="mb-4">
         <CardTitle className="text-xl font-semibold">
-          Expense Summery - June 2024
+          Expense Summary - June 2024
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -67,39 +77,37 @@ const ExpenseSummery=()=> {
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="browser"
+              dataKey="category"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => chartConfig[value]?.label}
+              tickFormatter={(value) => chartConfig[value]?.label || value} // Show label from config or fallback to value
             />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
             <Bar
-              dataKey="visitors"
+              dataKey="amount"
               strokeWidth={2}
               radius={5}
               barSize={40}
               activeIndex={2}
-              activeBar={({ ...props }) => {
-                return (
-                  <Rectangle
-                    {...props}
-                    fillOpacity={0.8}
-                    stroke={props.payload.fill}
-                    strokeDasharray={4}
-                    strokeDashoffset={4}
-                  />
-                );
-              }}
+              activeBar={({ ...props }) => (
+                <Rectangle
+                  {...props}
+                  fillOpacity={0.8}
+                  stroke={props.payload.fill}
+                  strokeDasharray={4}
+                  strokeDashoffset={4}
+                />
+              )}
             />
           </BarChart>
         </ChartContainer>
       </CardContent>
     </Card>
   );
-}
+};
 
 export default ExpenseSummery;
