@@ -80,6 +80,13 @@ export const financeApi = createApi({
       }),
       invalidatesTags: ["debt"],
     }),
+    deleteSingleDebt: builder.mutation({
+      query: ({ ownerUserId, debtId }) => ({
+        url: `finance/debts/${ownerUserId}/${debtId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["debt"],
+    }),
   }),
 });
 
@@ -94,4 +101,5 @@ export const {
   useAddNewDebtMutation,
   useGetAllDebtQuery,
   useUpdateDebtPaidStatusMutation,
+  useDeleteSingleDebtMutation
 } = financeApi;

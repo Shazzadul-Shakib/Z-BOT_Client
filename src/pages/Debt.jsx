@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/table";
 import useToggle from "@/hooks/useToggle";
 import {
+  useDeleteSingleDebtMutation,
   useGetAllDebtQuery,
   useUpdateDebtPaidStatusMutation,
 } from "@/redux/api/finance-api";
@@ -37,6 +38,7 @@ const Debt = () => {
   const { user } = useSelector((state) => state.user);
   const { data: allDebtResponse, isLoading } = useGetAllDebtQuery(user._id);
   const [updateDebtPaidStatus] = useUpdateDebtPaidStatusMutation();
+  const [deleteSingleDebt] = useDeleteSingleDebtMutation();
   const [
     isAddNewDebtModalOpen,
     toggleAddNewDebtModalOn,
@@ -125,7 +127,16 @@ const Debt = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={async () => {
+                            await deleteSingleDebt({
+                              ownerUserId: user._id,
+                              debtId: debt._id,
+                            });
+                          }}
+                        >
+                          Delete
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
