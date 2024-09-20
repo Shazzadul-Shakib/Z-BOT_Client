@@ -125,6 +125,10 @@ const Expense = () => {
                             deleteSingleExpense({
                               ownerUserId: user._id,
                               expenseId: item._id,
+                              data: {
+                                walletId: item.walletId,
+                                addableAmount: item.expenseAmount,
+                              },
                             });
                           }}
                         >

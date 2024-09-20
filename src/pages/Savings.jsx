@@ -21,7 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetAllSavingsQuery } from "@/redux/api/finance-api";
+import { useDeleteSingleSavingsMutation, useGetAllSavingsQuery } from "@/redux/api/finance-api";
 import { MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 
@@ -30,11 +30,11 @@ const Savings = () => {
   const { data: allSavingsResponse, isLoading } = useGetAllSavingsQuery(
     user._id
   );
+  const [deleteSingleSavings]=useDeleteSingleSavingsMutation();
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
   const allSavings = allSavingsResponse?.data;
-
   return (
     <div>
       <Card>
@@ -89,7 +89,9 @@ const Savings = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                        <DropdownMenuItem onClick={async()=>{
+                          await deleteSingleSavings({ownerUserId:user._id,savingsId:item._id, data:{walletId:item.walletId,addableAmount:item.expenseAmount}});
+                        }}>Delete</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
