@@ -13,7 +13,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -25,27 +24,30 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useToggle from "@/hooks/useToggle";
-import { useGetAllExpenseQuery } from "@/redux/api/finance-api";
+import {
+  useDeleteSingleExpenseMutation,
+  useGetAllExpenseQuery,
+} from "@/redux/api/finance-api";
 import { PlusCircle } from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 
 const Expense = () => {
-  const {user}=useSelector(state=>state.user);
+  const { user } = useSelector((state) => state.user);
   const { data: allExpensesResponse, isLoading } = useGetAllExpenseQuery(
     user._id
   );
+  const [deleteSingleExpense] = useDeleteSingleExpenseMutation();
   const [
     isAddNewExpenseModalOpen,
     toggleAddNewExpenseModalOn,
     toggleAddNewExpenseModalOff,
   ] = useToggle();
 
-  const allExpenses=allExpensesResponse?.data;
+  const allExpenses = allExpensesResponse?.data;
 
-
-  if(isLoading){
-    return <h1>Loading...</h1>
+  if (isLoading) {
+    return <h1>Loading...</h1>;
   }
   return (
     <div>
@@ -118,9 +120,16 @@ const Expense = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => {
+                            deleteSingleExpense({
+                              ownerUserId: user._id,
+                              expenseId: item._id,
+                            });
+                          }}
+                        >
+                          Delete
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

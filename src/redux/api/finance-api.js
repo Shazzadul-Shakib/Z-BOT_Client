@@ -36,6 +36,13 @@ export const financeApi = createApi({
       }),
       providesTags: ["wallet", "expense"],
     }),
+    deleteSingleExpense: builder.mutation({
+      query: ({ ownerUserId, expenseId }) => ({
+        url: `finance/expenses/${ownerUserId}/${expenseId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["wallet", "expense","savings"],
+    }),
     getAllSavings: builder.query({
       query: (ownerUserId) => ({
         url: `finance/savings/${ownerUserId}`,
@@ -57,10 +64,10 @@ export const financeApi = createApi({
       providesTags: ["debt"],
     }),
     updateDebtPaidStatus: builder.mutation({
-      query: ({ownerUserId,debtId,data}) => ({
+      query: ({ ownerUserId, debtId, data }) => ({
         url: `finance/debts/${ownerUserId}/${debtId}`,
-        method:"PATCH",
-        body:data
+        method: "PATCH",
+        body: data,
       }),
       invalidatesTags: ["debt"],
     }),
@@ -72,8 +79,9 @@ export const {
   useGetAllWalletQuery,
   useAddNewExpenseMutation,
   useGetAllExpenseQuery,
+  useDeleteSingleExpenseMutation,
   useGetAllSavingsQuery,
   useAddNewDebtMutation,
   useGetAllDebtQuery,
-  useUpdateDebtPaidStatusMutation
+  useUpdateDebtPaidStatusMutation,
 } = financeApi;
