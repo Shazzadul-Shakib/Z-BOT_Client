@@ -11,8 +11,11 @@ import {
 } from "@/components/ui/card";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -28,15 +31,34 @@ import {
   useDeleteSingleExpenseMutation,
   useGetAllExpenseQuery,
 } from "@/redux/api/finance-api";
-import { PlusCircle } from "lucide-react";
+import { ListFilter, PlusCircle } from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+
+const months = [
+  { name: "January", value: 1 },
+  { name: "February", value: 2 },
+  { name: "March", value: 3 },
+  { name: "April", value: 4 },
+  { name: "May", value: 5 },
+  { name: "June", value: 6 },
+  { name: "July", value: 7 },
+  { name: "August", value: 8 },
+  { name: "September", value: 9 },
+  { name: "October", value: 10 },
+  { name: "November", value: 11 },
+  { name: "December", value: 12 },
+];
 
 const Expense = () => {
   const { user } = useSelector((state) => state.user);
-  const { data: allExpensesResponse, isLoading } = useGetAllExpenseQuery(
-    user._id
-  );
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const { data: allExpensesResponse, isLoading } = useGetAllExpenseQuery({
+    ownerUserId: user._id,
+    month: month,
+  });
   const [deleteSingleExpense] = useDeleteSingleExpenseMutation();
   const [
     isAddNewExpenseModalOpen,
@@ -44,24 +66,76 @@ const Expense = () => {
     toggleAddNewExpenseModalOff,
   ] = useToggle();
 
+  const handleMonthChange = async (monthValue) => {
+    setMonth(monthValue);
+  };
+  const { control } = useForm({
+    defaultValues: { month: month },
+  });
+
+  
+
   const allExpenses = allExpensesResponse?.data;
 
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
+
   return (
     <div>
       <Card>
-        <CardHeader className=" flex-row justify-between mr-0 md:mr-4 ">
+        <CardHeader className="flex-row justify-between mr-0 md:mr-4">
           <div>
             <CardTitle className="text-sm font-normal md:text-2xl md:font-medium">
-              Expense History - September 2024
+              Expense History -{" "}
+              {months.find((m) => m.value === month)?.name || "Current Month"}
+              2024
             </CardTitle>
             <CardDescription className="mt-2 text-xs md:text-base">
               Manage your Expenses and view their status.
             </CardDescription>
           </div>
-          <div>
+
+          <div className="flex gap-3">
+            <div>
+              <Controller
+                name="month"
+                control={control}
+                render={({ field }) => (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-7 gap-1 text-sm py-4 px-6"
+                      >
+                        <ListFilter className="h-3.5 w-3.5" />
+                        <span className="sr-only sm:not-sr-only">
+                          {months.find((month) => month.value === field.value)
+                            ?.name || "Filter"}
+                        </span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Filter by month</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      {months.map(({ name, value }) => (
+                        <DropdownMenuCheckboxItem
+                          key={value}
+                          checked={field.value === value}
+                          onCheckedChange={() => {
+                            field.onChange(value);
+                            handleMonthChange(value); // Log the month value
+                          }}
+                        >
+                          {name}
+                        </DropdownMenuCheckboxItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
+              />
+            </div>
             <Button
               onClick={toggleAddNewExpenseModalOn}
               size="sm"
@@ -82,7 +156,6 @@ const Expense = () => {
                 <TableHead className="hidden md:table-cell">Wallet</TableHead>
                 <TableHead className="hidden md:table-cell">Category</TableHead>
                 <TableHead>Price</TableHead>
-
                 <TableHead className="hidden md:table-cell">
                   Created at
                 </TableHead>

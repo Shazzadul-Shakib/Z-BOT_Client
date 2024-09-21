@@ -16,8 +16,12 @@ const Finance = () => {
   const { data: allWalletsResponse, isLoading } = useGetAllWalletQuery(
     user._id
   );
-  const { data: allExpensesResponse, isLoading: expenseIsLoading } =
-    useGetAllExpenseQuery(user._id);
+  
+   const { data: allExpensesResponse, isLoading: expenseIsLoading } =
+     useGetAllExpenseQuery({
+       ownerUserId: user._id,
+       month: new Date().getMonth() + 1,
+     });
   const { data: allSavingsResponse, isLoading: savingsIsLoading } =
     useGetAllSavingsQuery(user._id);
   const { data: allDebtResponse, isLoading: debtIsLoading } =
@@ -79,7 +83,7 @@ const Finance = () => {
         <TotalAmountCard Icon={BadgePercent} Info={Info4} route={"debt"} />
       </div>
       <div className=" grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <ExpenseSummery Info={allExpenses} />
+        <ExpenseSummery />
         <div className="grid grid-cols-1 gap-4">
           <AddExpenseCard ExInfo={ExInfo1} />
           <AddExpenseCard ExInfo={ExInfo2} />

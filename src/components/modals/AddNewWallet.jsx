@@ -26,8 +26,8 @@ const AddNewWalletModal = ({ onClose }) => {
   const [addWallet, { isLoading }] = useAddWalletMutation();
 
   const onSubmit = async (data) => {
-    console.log(data);
     data.walletOwnerId = user._id;
+    data.initialBalance=data.walletBalance;
     const result = await addWallet(data).unwrap();
     if (result.success) {
       reset();

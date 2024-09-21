@@ -31,8 +31,8 @@ export const financeApi = createApi({
       invalidatesTags: ["wallet", "expense", "savings", "debt"],
     }),
     getAllExpense: builder.query({
-      query: (ownerUserId) => ({
-        url: `finance/expenses/${ownerUserId}`,
+      query: ({ ownerUserId, month }) => ({
+        url: `finance/expenses/${ownerUserId}?month=${month}`, // Using a query parameter for month
       }),
       providesTags: ["wallet", "expense"],
     }),
