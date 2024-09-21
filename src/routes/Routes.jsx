@@ -14,6 +14,8 @@ import FinanceHome from "@/pages/FinanceHome";
 import Expense from "@/pages/Expense";
 import Savings from "@/pages/Savings";
 import Debt from "@/pages/Debt";
+import Dasboard from "@/pages/Dasboard";
+import Dashboard from "@/pages/Dasboard";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +42,10 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
       {
         path: "projects",
         element: <Projects />,

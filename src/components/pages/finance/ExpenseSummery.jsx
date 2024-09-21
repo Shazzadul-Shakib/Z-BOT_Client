@@ -86,7 +86,7 @@ const ExpenseSummary = () => {
 
   return (
     <Card>
-      <CardHeader className="grid grid-cols-2 mb-4 space-y-0">
+      <CardHeader className="grid grid-cols-2 space-y-0">
         <CardTitle className="text-lg font-semibold">
           Expense Summary -{" "}
           {months.find((m) => m.value === month)?.name || "Current Month"} 2024

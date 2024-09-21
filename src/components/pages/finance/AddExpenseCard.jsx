@@ -25,7 +25,7 @@ const AddExpenseCard = ({ ExInfo }) => {
   };
 
   return (
-    <Card className="p-6">
+    <Card className="p-4">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-2xl font-semibold">{bName}</CardTitle>
         <SquarePlus
