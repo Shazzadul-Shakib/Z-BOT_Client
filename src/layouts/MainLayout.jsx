@@ -24,6 +24,9 @@ import { logout } from "@/redux/slices/userSlice";
 import { persistor } from "@/redux/store";
 import { useLogoutUserMutation } from "@/redux/api/users-api";
 import { useGetAllProjectsQuery } from "@/redux/api/projects-api";
+import { useCallback, useEffect } from "react";
+import DnaLoader from "@/components/loader/loader";
+import ModalBody from "@/components/modals/modalBody/ModalBody";
 
 const MainLayout = () => {
   const { theme, toggleTheme } = useTheme();
@@ -35,18 +38,23 @@ const MainLayout = () => {
     skip: user === null,
   });
 
-  if (isLoading) {
-    return <h1>loading...</h1>;
-  }
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     dispatch(logout());
     await persistor.purge();
     await logoutUser();
-  };
+  }, [dispatch, logoutUser]);
 
-  if (error?.status === 401 || error?.status === 403) {
-    handleLogout();
-    console.log(error?.data.message);
+  useEffect(() => {
+    const handleUnauthorizedError = async () => {
+      if (error?.status === 401 || error?.status === 403) {
+        await handleLogout();
+      }
+    };
+    handleUnauthorizedError();
+  }, [error, handleLogout]);
+
+  if (isLoading) {
+    return <ModalBody modal={<DnaLoader/>}/>;
   }
 
   return (
@@ -147,8 +155,7 @@ const MainLayout = () => {
               </nav>
             </SheetContent>
           </Sheet>
-          <div className="w-full flex-1">
-          </div>
+          <div className="w-full flex-1"></div>
           <Button
             variant="secondary"
             size="icon"

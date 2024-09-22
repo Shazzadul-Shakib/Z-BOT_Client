@@ -1,0 +1,32 @@
+.bouncing-dots-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height */
+}
+
+.dot {
+  width: 15px; /* Dot size */
+  height: 15px; /* Dot size */
+  margin: 0 5px; /* Space between dots */
+  border-radius: 50%;
+  background-color: #db8f0d; /* Customize the color */
+  animation: bounce 0.6s infinite alternate;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s; /* Delay for the second dot */
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s; /* Delay for the third dot */
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-20px); /* Bounce height */
+  }
+}

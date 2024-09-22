@@ -20,6 +20,8 @@ import { ListFilter } from "lucide-react";
 import { useState } from "react";
 import { useGetAllExpenseQuery } from "@/redux/api/finance-api";
 import { useSelector } from "react-redux";
+import ModalBody from "@/components/modals/modalBody/ModalBody";
+import DnaLoader from "@/components/loader/loader";
 
 const chartConfig = {
   residence: { label: "Residence", color: "hsl(var(--chart-1))" },
@@ -27,8 +29,7 @@ const chartConfig = {
   vehicle: { label: "Vehicle", color: "hsl(var(--chart-3))" },
   mobile: { label: "Mobile", color: "hsl(var(--chart-4))" },
   shopping: { label: "Shopping", color: "hsl(var(--chart-5))" },
-  education: { label: "Education", color: "hsl(var(--chart-6))" },
-  debt: { label: "Debt", color: "hsl(var(--chart-3))" },
+  education: { label: "Education", color: "hsl(var(--chart-3))" },
   savings: { label: "Savings", color: "hsl(var(--chart-2))" },
   others: { label: "Others", color: "hsl(var(--chart-1))" },
 };
@@ -65,7 +66,7 @@ const ExpenseSummary = () => {
   });
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <ModalBody modal={<DnaLoader />} />;
   }
 
   const Info = allExpensesResponse?.data;

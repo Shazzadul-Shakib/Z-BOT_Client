@@ -20,7 +20,7 @@ const FeatureCard = ({ feature }) => {
     tasks?.length > 0 ? tasks.filter((task) => task.completed === true) : [];
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <ModalBody modal={<DnaLoader />} />;
   }
 
   return (

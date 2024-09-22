@@ -14,7 +14,6 @@ import FinanceHome from "@/pages/FinanceHome";
 import Expense from "@/pages/Expense";
 import Savings from "@/pages/Savings";
 import Debt from "@/pages/Debt";
-import Dasboard from "@/pages/Dasboard";
 import Dashboard from "@/pages/Dasboard";
 
 export const router = createBrowserRouter([

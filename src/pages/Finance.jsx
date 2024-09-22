@@ -1,3 +1,5 @@
+import DnaLoader from "@/components/loader/loader";
+import ModalBody from "@/components/modals/modalBody/ModalBody";
 import AddExpenseCard from "@/components/pages/finance/AddExpenseCard";
 import ExpenseSummery from "@/components/pages/finance/ExpenseSummery";
 import TotalAmountCard from "@/components/pages/finance/TotalAmountCard";
@@ -28,7 +30,7 @@ const Finance = () => {
     useGetAllDebtQuery(user._id);
 
   if (isLoading || expenseIsLoading || savingsIsLoading || debtIsLoading) {
-    return <h1>Loading...</h1>;
+    return <ModalBody modal={<DnaLoader />} />;
   }
   const allExpenses = allExpensesResponse?.data ?? [];
   const allWallets = allWalletsResponse?.data ?? [];

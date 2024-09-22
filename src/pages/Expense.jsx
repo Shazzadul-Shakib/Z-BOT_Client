@@ -1,3 +1,4 @@
+import DnaLoader from "@/components/loader/loader";
 import AddNewExpenseModal from "@/components/modals/AddNewExpenseModal";
 import ModalBody from "@/components/modals/modalBody/ModalBody";
 import { Badge } from "@/components/ui/badge";
@@ -73,12 +74,10 @@ const Expense = () => {
     defaultValues: { month: month },
   });
 
-  
-
   const allExpenses = allExpensesResponse?.data;
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <ModalBody modal={<DnaLoader />} />;
   }
 
   return (

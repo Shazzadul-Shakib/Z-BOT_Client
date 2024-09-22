@@ -1,3 +1,5 @@
+import DnaLoader from "@/components/loader/loader";
+import ModalBody from "@/components/modals/modalBody/ModalBody";
 import HeaderCard from "@/components/pages/projects/HeaderCard";
 import ProjectCard from "@/components/pages/projects/ProjectCard";
 import { useGetAllProjectsQuery } from "@/redux/api/projects-api";
@@ -8,11 +10,7 @@ const Projects = () => {
   const { data: projects, isLoading } = useGetAllProjectsQuery(user?._id);
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-[calc(100vh-100px)]">
-        <h1>Loading...</h1>
-      </div>
-    );
+    return <ModalBody modal={<DnaLoader />} />;
   }
 
   return (

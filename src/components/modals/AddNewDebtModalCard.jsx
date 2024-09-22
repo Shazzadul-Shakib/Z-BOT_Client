@@ -32,7 +32,7 @@ const AddNewDebtModal = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <ModalBody modal={<DnaLoader />} />;
   }
 
   const onSubmit = async (data) => {

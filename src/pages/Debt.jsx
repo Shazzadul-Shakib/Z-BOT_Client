@@ -1,3 +1,4 @@
+import DnaLoader from "@/components/loader/loader";
 import AddNewDebtModal from "@/components/modals/AddNewDebtModalCard";
 import ModalBody from "@/components/modals/modalBody/ModalBody";
 import { Button } from "@/components/ui/button";
@@ -46,7 +47,7 @@ const Debt = () => {
   ] = useToggle();
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <ModalBody modal={<DnaLoader />} />;
   }
 
   const alldebts = allDebtResponse?.data ?? [];

@@ -27,7 +27,7 @@ const AddExpenseCard = ({ ExInfo }) => {
   return (
     <Card className="p-4">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-2xl font-semibold">{bName}</CardTitle>
+        <CardTitle className="text-xl font-semibold">{bName}</CardTitle>
         <SquarePlus
           onClick={() => {
             handleAddWalletModal(index);

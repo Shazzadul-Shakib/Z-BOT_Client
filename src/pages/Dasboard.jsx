@@ -1,3 +1,5 @@
+import DnaLoader from "@/components/loader/loader";
+import ModalBody from "@/components/modals/modalBody/ModalBody";
 import AddExpenseCard from "@/components/pages/finance/AddExpenseCard";
 import ExpenseSummery from "@/components/pages/finance/ExpenseSummery";
 import TotalAmountCard from "@/components/pages/finance/TotalAmountCard";
@@ -28,7 +30,7 @@ const Dashboard = () => {
     useGetAllProjectsQuery(user?._id);
 
   if (walletIsLoading || expenseIsLoading || projectsIsLoading) {
-    return <h1>Loading...</h1>;
+    return <ModalBody modal={<DnaLoader />} />;
   }
 
   const allExpenses = allExpensesResponse?.data ?? [];
@@ -80,7 +82,7 @@ const Dashboard = () => {
           {/* Projects Overview and Add Project Button on right */}
           <div className="flex flex-col gap-4 border p-11">
             <div className="flex justify-between items-center">
-              <h2 className="text-lg font-semibold">Projects Overview</h2>
+              <h2 className="text-xl font-semibold">Projects Overview</h2>
               {/* Add New Project Button */}
               <Link to="/projects">
                 <Button size="sm" className="h-8 gap-1 mt-2">

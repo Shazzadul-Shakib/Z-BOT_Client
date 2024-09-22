@@ -1,3 +1,5 @@
+import DnaLoader from "@/components/loader/loader";
+import ModalBody from "@/components/modals/modalBody/ModalBody";
 import AddNewFeature from "@/components/pages/project/AddNewFeature";
 import FeatureCard from "@/components/pages/project/FeatureCard";
 import HeaderAboutCard from "@/components/pages/project/HeaderAboutCard";
@@ -12,7 +14,7 @@ const Project = () => {
   const allFeatures=data?.data;
   
   if(isLoading){
-    return <h1>Loading...</h1>
+    return <ModalBody modal={<DnaLoader />} />;
   }
   return (
     <div className=" h-[calc(100vh-95px)] overflow-y-auto hide-scrollbar">

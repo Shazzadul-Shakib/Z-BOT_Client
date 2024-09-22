@@ -1,3 +1,5 @@
+import DnaLoader from "@/components/loader/loader";
+import ModalBody from "@/components/modals/modalBody/ModalBody";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +23,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDeleteSingleSavingsMutation, useGetAllSavingsQuery } from "@/redux/api/finance-api";
+import {
+  useDeleteSingleSavingsMutation,
+  useGetAllSavingsQuery,
+} from "@/redux/api/finance-api";
 import { MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 
@@ -30,9 +35,9 @@ const Savings = () => {
   const { data: allSavingsResponse, isLoading } = useGetAllSavingsQuery(
     user._id
   );
-  const [deleteSingleSavings]=useDeleteSingleSavingsMutation();
+  const [deleteSingleSavings] = useDeleteSingleSavingsMutation();
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <ModalBody modal={<DnaLoader />} />;
   }
   const allSavings = allSavingsResponse?.data;
   return (
@@ -89,9 +94,20 @@ const Savings = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={async()=>{
-                          await deleteSingleSavings({ownerUserId:user._id,savingsId:item._id, data:{walletId:item.walletId,addableAmount:item.expenseAmount}});
-                        }}>Delete</DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={async () => {
+                            await deleteSingleSavings({
+                              ownerUserId: user._id,
+                              savingsId: item._id,
+                              data: {
+                                walletId: item.walletId,
+                                addableAmount: item.expenseAmount,
+                              },
+                            });
+                          }}
+                        >
+                          Delete
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
