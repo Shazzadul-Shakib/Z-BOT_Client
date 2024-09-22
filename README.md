@@ -1,8 +1,23 @@
-# React + Vite
+# Z-BOT 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This project is a **MERN Stack Application** for managing projects and financial records. It allows users to create, track, and update project details, manage and record income, expenses and savings so that you can track your monthly financial performance.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Tech Stack:
+- **MongoDB**: Database
+- **Express**: Backend Framework
+- **React**: Frontend Framework
+- **Node.js**: Server-side Runtime
+
+## Features
+
+- User authentication with JWT and bcrypt
+- Responsive dashboard to display key metrics
+- Form validation using React Hook Form
+- Dark and light themes
+
+
+## more to go ...
+
+
