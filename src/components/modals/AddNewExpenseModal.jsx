@@ -28,6 +28,8 @@ import {
   useGetAllWalletQuery,
 } from "@/redux/api/finance-api";
 import { Link, useNavigate } from "react-router-dom";
+import ModalBody from "./modalBody/ModalBody";
+import DnaLoader from "../loader/loader";
 
 const AddNewExpenseModal = ({ onClose }) => {
   const { user } = useSelector((state) => state.user);
@@ -81,7 +83,7 @@ const AddNewExpenseModal = ({ onClose }) => {
   };
 
   if (isLoading || expenseIsLoading) {
-    return <h1>Loading....</h1>;
+    return <ModalBody modal={<DnaLoader />} />;
   }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">

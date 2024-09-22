@@ -9,9 +9,14 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "@/redux/slices/userSlice";
+import ModalBody from "@/components/modals/modalBody/ModalBody";
+import EmailForOTP from "@/components/modals/emailForOTP";
+import useToggle from "@/hooks/useToggle";
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const [isOpen, toggleOn, toggleOff, ]=useToggle();
+
   const {
     register,
     reset,
@@ -71,9 +76,11 @@ const Login = () => {
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
-                <Link to="/" className="ml-auto inline-block text-sm underline">
+                <p onClick={()=>{
+                  toggleOn();
+                }} className="ml-auto inline-block text-sm underline cursor-pointer">
                   Forgot your password?
-                </Link>
+                </p>
               </div>
               <div className="relative">
                 <Input
@@ -106,6 +113,9 @@ const Login = () => {
           </div>
         </CardContent>
       </Card>
+      {
+        isOpen && <ModalBody modal={<EmailForOTP onClose={toggleOff}/>} />
+      }
     </div>
   );
 };

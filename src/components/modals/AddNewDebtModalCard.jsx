@@ -17,6 +17,8 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { useAddNewDebtMutation } from "@/redux/api/finance-api";
+import ModalBody from "./modalBody/ModalBody";
+import DnaLoader from "../loader/loader";
 
 const AddNewDebtModal = ({ onClose }) => {
   const { user } = useSelector((state) => state.user);
