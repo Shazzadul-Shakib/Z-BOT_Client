@@ -28,7 +28,7 @@ const ProjectCard = ({ projectInfo }) => {
             </CardDescription>
           </CardHeader>
           <CardFooter className="flex justify-end">
-            <CodeXml className="w-5 h-5" />
+            <CodeXml className="w-5 h-5 text-primary" />
           </CardFooter>
         </Card>
       </main>

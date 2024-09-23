@@ -13,6 +13,11 @@ const Projects = () => {
     return <ModalBody modal={<DnaLoader />} />;
   }
 
+  // Sort projects by most recent
+  const sortedProjects = projects?.slice().sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
   return (
     <main className="h-[calc(100vh-100px)] overflow-y-auto">
       {/* Header Section */}
@@ -22,7 +27,7 @@ const Projects = () => {
 
       {/* Project Cards Grid */}
       <section className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {projects?.map((project) => (
+        {sortedProjects?.map((project) => (
           <ProjectCard key={project._id} projectInfo={project} />
         ))}
       </section>

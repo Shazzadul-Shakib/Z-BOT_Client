@@ -60,7 +60,7 @@ const Dashboard = () => {
   return (
     <div>
       {/* Financial Overview Section */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mb-6">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mb-5">
         <TotalAmountCard
           Icon={CreditCard}
           Info={Info1}
@@ -82,15 +82,12 @@ const Dashboard = () => {
           {/* Projects Overview and Add Project Button on right */}
           <div className="flex flex-col gap-4 p-11 rounded-xl border-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">Projects Overview</h2>
+              <h2 className="text-xl">Projects Overview</h2>
               {/* Add New Project Button */}
               <Link to="/projects">
-                <Button
-                  size="sm"
-                  className="h-8 gap-1 mt-2 rounded"
-                >
+                <Button size="sm" className="h-8 gap-1 mt-2 rounded">
                   <PlusCircle className="h-5 w-5" />
-                  <span className="sr-only md:not-sr-only sm:whitespace-nowrap font-semibold">
+                  <span className="sr-only md:not-sr-only sm:whitespace-nowrap font-bold">
                     Create New Project
                   </span>
                 </Button>
@@ -98,7 +95,7 @@ const Dashboard = () => {
             </div>
 
             {/* Display Total Number of Projects */}
-            <p className="font-semibold">
+            <p className="font-semibold text-sm">
               You have {allProjects.length} projects.
             </p>
           </div>

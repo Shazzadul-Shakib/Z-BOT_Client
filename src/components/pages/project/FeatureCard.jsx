@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import DnaLoader from "@/components/loader/loader";
+import ModalBody from "@/components/modals/modalBody/ModalBody";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useGetAllTasksQuery } from "@/redux/api/projects-api";

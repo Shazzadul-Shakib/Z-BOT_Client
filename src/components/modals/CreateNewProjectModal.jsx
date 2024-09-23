@@ -14,22 +14,23 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "../ui/textarea";
 import { useSelector } from "react-redux";
 import { useAddProjectMutation } from "@/redux/api/projects-api";
+import { Loader } from "lucide-react";
 
 const CreateNewProjectModal = ({ toggleOff }) => {
+  const { user } = useSelector((state) => state.user);
+  const [addProject, { isLoading }] = useAddProjectMutation();
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { user } = useSelector((state) => state.user);
-  const [addProject, { isLoading }] = useAddProjectMutation();
 
   // Submit handler
   const onSubmit = async (data) => {
     data.projectOwnerId = user?._id;
     const result = await addProject(data).unwrap();
-    if (result.success) {
+    if (result?.success) {
       reset();
       toggleOff();
     }
@@ -53,6 +54,7 @@ const CreateNewProjectModal = ({ toggleOff }) => {
                 </Label>
                 <Input
                   id="name"
+                  className="rounded p-4"
                   placeholder="Name of your project"
                   {...register("projectName", {
                     required: "Project Name is required",
@@ -71,7 +73,7 @@ const CreateNewProjectModal = ({ toggleOff }) => {
                 <Textarea
                   id="description"
                   placeholder="Type your project description here."
-                  className="w-full h-56 max-h-56 resize-none p-2 border rounded-md"
+                  className="w-full h-56 max-h-56 resize-none border rounded p-4"
                   {...register("projectDescription", {
                     required: "Project Description is required",
                   })}
@@ -86,11 +88,15 @@ const CreateNewProjectModal = ({ toggleOff }) => {
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button onClick={toggleOff} variant="outline">
+          <Button onClick={toggleOff} className="rounded p-4" variant="outline">
             Cancel
           </Button>
-          <Button type="submit" onClick={handleSubmit(onSubmit)}>
-            {isLoading ? "Loading..." : "Create"}
+          <Button
+            type="submit"
+            className="rounded p-4 font-bold"
+            onClick={handleSubmit(onSubmit)}
+          >
+            {isLoading ? <Loader/> : "Create"}
           </Button>
         </CardFooter>
       </Card>

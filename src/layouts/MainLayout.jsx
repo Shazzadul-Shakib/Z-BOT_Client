@@ -190,7 +190,7 @@ const MainLayout = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 relative">
           {/* Main page layout here */}
           <Outlet />
         </main>

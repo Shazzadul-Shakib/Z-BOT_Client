@@ -88,9 +88,8 @@ const ExpenseSummary = () => {
   return (
     <Card>
       <CardHeader className="grid grid-cols-2 space-y-0">
-        <CardTitle className="text-lg font-semibold">
-          Expense Summary -{" "}
-          {months.find((m) => m.value === month)?.name || "Current Month"} 2024
+        <CardTitle className="text-xl font-semibold">
+          Expense Summary
         </CardTitle>
         <div className="flex justify-end">
           <Controller
@@ -102,7 +101,7 @@ const ExpenseSummary = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-7 gap-1 text-sm py-4"
+                    className="h-7 gap-1 text-sm py-4 rounded"
                   >
                     <ListFilter className="h-3.5 w-3.5" />
                     <span className="sr-only sm:not-sr-only">
@@ -120,7 +119,7 @@ const ExpenseSummary = () => {
                       checked={field.value === value}
                       onCheckedChange={() => {
                         field.onChange(value);
-                        handleMonthChange(value); // Update month state
+                        handleMonthChange(value);
                       }}
                     >
                       {name}
