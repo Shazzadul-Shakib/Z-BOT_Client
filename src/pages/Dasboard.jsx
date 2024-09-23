@@ -80,14 +80,17 @@ const Dashboard = () => {
 
         <div className="grid gap-6">
           {/* Projects Overview and Add Project Button on right */}
-          <div className="flex flex-col gap-4 border p-11">
+          <div className="flex flex-col gap-4 p-11 rounded-xl border-4">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold">Projects Overview</h2>
               {/* Add New Project Button */}
               <Link to="/projects">
-                <Button size="sm" className="h-8 gap-1 mt-2">
+                <Button
+                  size="sm"
+                  className="h-8 gap-1 mt-2 rounded"
+                >
                   <PlusCircle className="h-5 w-5" />
-                  <span className="sr-only md:not-sr-only sm:whitespace-nowrap">
+                  <span className="sr-only md:not-sr-only sm:whitespace-nowrap font-semibold">
                     Create New Project
                   </span>
                 </Button>
@@ -95,7 +98,9 @@ const Dashboard = () => {
             </div>
 
             {/* Display Total Number of Projects */}
-            <p className="font-semibold">You have {allProjects.length} projects.</p>
+            <p className="font-semibold">
+              You have {allProjects.length} projects.
+            </p>
           </div>
           <AddExpenseCard ExInfo={ExInfo2} />
         </div>

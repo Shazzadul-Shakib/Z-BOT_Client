@@ -106,7 +106,7 @@ const Expense = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-7 gap-1 text-sm py-4 px-6"
+                        className="h-7 gap-1 text-sm py-4 px-6 rounded"
                       >
                         <ListFilter className="h-3.5 w-3.5" />
                         <span className="sr-only sm:not-sr-only">
@@ -138,7 +138,7 @@ const Expense = () => {
             <Button
               onClick={toggleAddNewExpenseModalOn}
               size="sm"
-              className="h-8 gap-1"
+              className="h-8 gap-1 rounded"
             >
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -147,7 +147,7 @@ const Expense = () => {
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="h-[calc(100dvh-207px)] overflow-y-auto hide-scrollbar">
+        <CardContent className="h-[calc(100dvh-215px)] overflow-y-auto hide-scrollbar">
           <Table>
             <TableHeader>
               <TableRow>
@@ -191,7 +191,7 @@ const Expense = () => {
                           <span className="sr-only">Toggle menu</span>
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
+                      <DropdownMenuContent align="end" className="rounded">
                         <DropdownMenuItem
                           onClick={() => {
                             deleteSingleExpense({

@@ -53,7 +53,7 @@ const Savings = () => {
             </CardDescription>
           </div>
         </CardHeader>
-        <CardContent className="h-[calc(100dvh-207px)] overflow-y-auto hide-scrollbar">
+        <CardContent className="h-[calc(100dvh-215px)] overflow-y-auto hide-scrollbar">
           <Table>
             <TableHeader>
               <TableRow>

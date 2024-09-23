@@ -53,7 +53,7 @@ const AddNewWalletModal = ({ onClose }) => {
             <div>
               <Input
                 placeholder="Name of new Wallet"
-                className="p-6"
+                className="p-6 rounded"
                 {...register("walletName", {
                   required: "Wallet name is required",
                 })}
@@ -67,7 +67,7 @@ const AddNewWalletModal = ({ onClose }) => {
             <div className="mt-4">
               <Input
                 placeholder="Wallet Ballance"
-                className="p-6 otp-input"
+                className="p-6 otp-input rounded"
                 type="number"
                 {...register("walletBalance", {
                   required: "Wallet balance is required",
@@ -87,7 +87,7 @@ const AddNewWalletModal = ({ onClose }) => {
           <CardFooter>
             <Button
               type="submit"
-              className="w-full bg-primary text-secondary font-semibold flex items-center gap-1"
+              className="w-full bg-primary text-secondary font-bold flex items-center gap-1 rounded"
             >
               <PlusCircle className="h-5 w-5" />
               {isLoading ? "Loading..." : "Create Wallet"}

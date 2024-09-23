@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRegisterUserMutation } from "@/redux/api/users-api";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux";
 
 const Register = () => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const navigate = useNavigate();
   const {
     register,
     reset,
@@ -22,20 +21,16 @@ const Register = () => {
 
   // calling api for register user
   const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // handle submit form and operation to send otp and user to database
   const onSubmit = async (data) => {
-    try {
-      const result = await registerUser(data).unwrap();
-      // console.log(result)
-      if (result) {
-        dispatch(setOtp({ otp: result?.data }));
-        reset();
-        navigate("/verifyotp");
-      }
-    } catch (error) {
-      console.log(error);
+    const result = await registerUser(data).unwrap();
+    if (result) {
+      dispatch(setOtp({ otp: result?.data }));
+      reset();
+      navigate("/verifyotp");
     }
   };
 
@@ -57,6 +52,7 @@ const Register = () => {
                 {...register("userName", { required: true })}
                 id="name"
                 placeholder="Enter your name"
+                className="rounded p-4"
               />
               {errors.userName && (
                 <span className=" text-xs text-destructive ">
@@ -71,6 +67,7 @@ const Register = () => {
                 id="email"
                 type="email"
                 placeholder="m@example.com"
+                className="rounded p-4"
               />
               {errors.userEmail && (
                 <span className=" text-xs text-destructive ">
@@ -95,6 +92,8 @@ const Register = () => {
                   })}
                   id="password"
                   type={passwordShown ? "text" : "password"}
+                  placeholder="xxxxxx"
+                  className="rounded p-4"
                 />
                 <div
                   className=" absolute right-3 top-2.5 cursor-pointer"
@@ -109,13 +108,16 @@ const Register = () => {
                 </span>
               )}
             </div>
-            <Button type="submit" className="w-full">
-              {isLoading ? "loading..." : "Create an account"}
+            <Button
+              type="submit"
+              className="w-full rounded text-background font-bold"
+            >
+              {isLoading ? <Loader/>: "Create an account"}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
-            <Link to="/login" className="underline">
+            <Link to="/login" className="underline text-primary">
               Sign in
             </Link>
           </div>

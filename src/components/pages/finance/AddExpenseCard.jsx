@@ -32,7 +32,7 @@ const AddExpenseCard = ({ ExInfo }) => {
           onClick={() => {
             handleAddWalletModal(index);
           }}
-          className="h-10 w-10 text-orange-300"
+          className="h-10 w-10 text-primary"
         />
       </CardHeader>
       <CardContent className="my-4">

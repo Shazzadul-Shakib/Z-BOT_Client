@@ -73,7 +73,7 @@ const Debt = () => {
             <Button
               onClick={toggleAddNewDebtModalOn}
               size="sm"
-              className="h-8 gap-1"
+              className="h-8 gap-1 rounded"
             >
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -82,7 +82,7 @@ const Debt = () => {
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="h-[calc(100dvh-207px)] overflow-y-auto hide-scrollbar">
+        <CardContent className="h-[calc(100dvh-215px)] overflow-y-auto hide-scrollbar">
           <Table>
             <TableHeader>
               <TableRow>

@@ -3,20 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLoginUserMutation } from "@/redux/api/users-api";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "@/redux/slices/userSlice";
-import ModalBody from "@/components/modals/modalBody/ModalBody";
-import EmailForOTP from "@/components/modals/emailForOTP";
-import useToggle from "@/hooks/useToggle";
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [isOpen, toggleOn, toggleOff, ]=useToggle();
-
   const {
     register,
     reset,
@@ -24,7 +19,7 @@ const Login = () => {
     setError,
     formState: { errors },
   } = useForm();
-  const [loginUser] = useLoginUserMutation();
+  const [loginUser,{isLoading}] = useLoginUserMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -42,7 +37,6 @@ const Login = () => {
       navigate("/");
     } else {
       const errorMessage = result?.error?.data?.message || "Login failed";
-
       // Set error for password field with custom message
       setError("password", {
         type: "manual",
@@ -64,6 +58,7 @@ const Login = () => {
               <Input
                 id="email"
                 type="email"
+                className="rounded p-4"
                 {...register("userEmail", { required: true })}
                 placeholder="m@example.com"
               />
@@ -76,17 +71,14 @@ const Login = () => {
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
-                <p onClick={()=>{
-                  toggleOn();
-                }} className="ml-auto inline-block text-sm underline cursor-pointer">
-                  Forgot your password?
-                </p>
               </div>
               <div className="relative">
                 <Input
                   {...register("password", { required: true })}
                   id="password"
                   type={passwordShown ? "text" : "password"}
+                  placeholder="xxxxxx"
+                  className="rounded p-4"
                 />
                 <div
                   className=" absolute right-3 top-2.5 cursor-pointer"
@@ -101,21 +93,21 @@ const Login = () => {
                 )}
               </div>
             </div>
-            <Button type="submit" className="w-full">
-              Login
+            <Button
+              type="submit"
+              className="w-full rounded font-bold text-background"
+            >
+              {isLoading ? <Loader/> :"Login"}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
-            <Link to="/register" className="underline">
+            <Link to="/register" className="underline text-primary">
               Sign up
             </Link>
           </div>
         </CardContent>
       </Card>
-      {
-        isOpen && <ModalBody modal={<EmailForOTP onClose={toggleOff}/>} />
-      }
     </div>
   );
 };
