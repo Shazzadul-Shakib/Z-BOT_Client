@@ -46,16 +46,19 @@ const Debt = () => {
     toggleAddNewDebtModalOff,
   ] = useToggle();
 
-  if (isLoading) {
-    return <ModalBody modal={<DnaLoader />} />;
-  }
+  
 
   const alldebts = allDebtResponse?.data ?? [];
 
   const handleToggleCheck = async (debtId, currentStatus) => {
     const data = { debtPaid: !currentStatus };
     await updateDebtPaidStatus({ ownerUserId: user._id, debtId, data });
+   
   };
+
+  if (isLoading ) {
+    return <ModalBody modal={<DnaLoader />} />;
+  }
 
   return (
     <div>
@@ -73,78 +76,85 @@ const Debt = () => {
             <Button
               onClick={toggleAddNewDebtModalOn}
               size="sm"
-              className="h-8 gap-1 rounded"
+              className="h-8 gap-2 rounded"
             >
-              <PlusCircle className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+              <PlusCircle className="h-5 w-5" />
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap font-bold">
                 Add New Debt
               </span>
             </Button>
           </div>
         </CardHeader>
         <CardContent className="h-[calc(100dvh-215px)] overflow-y-auto hide-scrollbar">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Status</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Price</TableHead>
+          {alldebts?.length === 0 ? (
+            <div className="h-full w-full flex justify-center items-center">
+              <h1 className=" text-2xl">No debt found!</h1>
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Price</TableHead>
 
-                <TableHead className="hidden md:table-cell">
-                  Received at
-                </TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {alldebts.map((debt) => (
-                <TableRow key={debt._id}>
-                  <TableCell className="font-normal md:font-medium">
-                    <Checkbox
-                      id={`termsDebt`}
-                      checked={debt?.debtPaid}
-                      onCheckedChange={() => {
-                        handleToggleCheck(debt?._id, debt?.debtPaid);
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell className="font-normal md:font-medium">
-                    <Label htmlFor={`termsDebt`}>{debt.debtOwnerName}</Label>
-                  </TableCell>
-                  <TableCell>${debt.debtAmount}</TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    {debt.debtDate}
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          onClick={async () => {
-                            await deleteSingleDebt({
-                              ownerUserId: user._id,
-                              debtId: debt._id,
-                            });
-                          }}
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+                  <TableHead className="hidden md:table-cell">
+                    Received at
+                  </TableHead>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {alldebts.map((debt) => (
+                  <TableRow key={debt._id}>
+                    <TableCell className="font-normal md:font-medium">
+                      <Checkbox
+                        id={`termsDebt`}
+                        checked={debt?.debtPaid}
+                        onCheckedChange={async() => {
+                         await handleToggleCheck(debt?._id, debt?.debtPaid);
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell className="font-normal md:font-medium">
+                      <Label htmlFor={`termsDebt`}>{debt.debtOwnerName}</Label>
+                    </TableCell>
+                    <TableCell>${debt.debtAmount}</TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {debt.debtDate}
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            aria-haspopup="true"
+                            size="icon"
+                            variant="ghost"
+                            className="rounded"
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                            <span className="sr-only">Toggle menu</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="rounded">
+                          <DropdownMenuItem
+                            onClick={async () => {
+                              await deleteSingleDebt({
+                                ownerUserId: user._id,
+                                debtId: debt._id,
+                              });
+                            }}
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
 

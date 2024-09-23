@@ -74,12 +74,14 @@ const Expense = () => {
     defaultValues: { month: month },
   });
 
-  const allExpenses = allExpensesResponse?.data;
-
   if (isLoading) {
     return <ModalBody modal={<DnaLoader />} />;
   }
 
+  const allExpenses = allExpensesResponse?.data;
+  const sortedExpense = allExpenses.slice().sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
   return (
     <div>
       <Card>
@@ -124,7 +126,7 @@ const Expense = () => {
                           checked={field.value === value}
                           onCheckedChange={() => {
                             field.onChange(value);
-                            handleMonthChange(value); // Log the month value
+                            handleMonthChange(value);
                           }}
                         >
                           {name}
@@ -148,71 +150,79 @@ const Expense = () => {
           </div>
         </CardHeader>
         <CardContent className="h-[calc(100dvh-215px)] overflow-y-auto hide-scrollbar">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead className="hidden md:table-cell">Wallet</TableHead>
-                <TableHead className="hidden md:table-cell">Category</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead className="hidden md:table-cell">
-                  Created at
-                </TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {allExpenses.map((item) => (
-                <TableRow key={item._id}>
-                  <TableCell className="font-normal md:font-medium">
-                    {item.expenseName}
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    <Badge className="px-4 py-2" variant="outline">
-                      {item.walletName}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    {item.expenseCategory}
-                  </TableCell>
-                  <TableCell>${item.expenseAmount}</TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    {item.expenseDate}
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="rounded">
-                        <DropdownMenuItem
-                          onClick={() => {
-                            deleteSingleExpense({
-                              ownerUserId: user._id,
-                              expenseId: item._id,
-                              data: {
-                                walletId: item.walletId,
-                                addableAmount: item.expenseAmount,
-                              },
-                            });
-                          }}
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+          {allExpenses.length === 0 ? (
+            <div className=" h-full flex justify-center items-center">
+              <h1 className=" text-2xl">No expesne found!</h1>
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead className="hidden md:table-cell">Wallet</TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Category
+                  </TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Created at
+                  </TableHead>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {sortedExpense?.map((item) => (
+                  <TableRow key={item._id}>
+                    <TableCell className="font-normal md:font-medium">
+                      {item.expenseName}
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      <Badge className="px-4 py-2" variant="outline">
+                        {item.walletName}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {item.expenseCategory}
+                    </TableCell>
+                    <TableCell>${item.expenseAmount}</TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {item.expenseDate}
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            aria-haspopup="true"
+                            size="icon"
+                            variant="ghost"
+                            className="rounded"
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="rounded">
+                          <DropdownMenuItem
+                            onClick={() => {
+                              deleteSingleExpense({
+                                ownerUserId: user._id,
+                                expenseId: item._id,
+                                data: {
+                                  walletId: item.walletId,
+                                  addableAmount: item.expenseAmount,
+                                },
+                              });
+                            }}
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
 

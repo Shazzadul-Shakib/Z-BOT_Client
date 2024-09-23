@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { PlusCircle, CircleX } from "lucide-react";
+import { PlusCircle, CircleX, Loader } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import {
@@ -27,7 +27,7 @@ const AddNewWalletModal = ({ onClose }) => {
 
   const onSubmit = async (data) => {
     data.walletOwnerId = user._id;
-    data.initialBalance=data.walletBalance;
+    data.initialBalance = data.walletBalance;
     const result = await addWallet(data).unwrap();
     if (result.success) {
       reset();
@@ -89,8 +89,13 @@ const AddNewWalletModal = ({ onClose }) => {
               type="submit"
               className="w-full bg-primary text-secondary font-bold flex items-center gap-1 rounded"
             >
-              <PlusCircle className="h-5 w-5" />
-              {isLoading ? "Loading..." : "Create Wallet"}
+              {isLoading ? (
+                <Loader/>
+              ) : (
+                <>
+                  <PlusCircle className="h-5 w-5" /> Create Wallet
+                </>
+              )}
             </Button>
           </CardFooter>
         </form>

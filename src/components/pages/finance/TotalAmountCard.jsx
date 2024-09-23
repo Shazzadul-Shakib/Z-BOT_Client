@@ -8,7 +8,7 @@ const TotalAmountCard = ({ Icon, Info, route }) => {
 
   return (
     <Link to={route}>
-      <Card className="p-4">
+      <Card className="p-4 min-w-[240px]">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-xl font-semibold">{bName}</CardTitle>
           {Icon && <Icon className="h-5 w-5 text-orange-300" />}

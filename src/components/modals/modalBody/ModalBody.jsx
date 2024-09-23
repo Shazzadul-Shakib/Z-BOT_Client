@@ -2,7 +2,7 @@
 
 const ModalBody = ({ modal }) => {
   return (
-    <div className="fixed inset-0 bg-background bg-opacity-90 flex justify-center py-16 z-50 overflow-y-auto-auto">
+    <div className="fixed inset-0 bg-background bg-opacity-90 flex items-center justify-center  z-50 overflow-y-auto">
       {modal}
     </div>
   );

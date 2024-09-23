@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { PlusCircle, XCircle, CalendarIcon } from "lucide-react";
+import { PlusCircle, XCircle, CalendarIcon, Loader } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import {
@@ -82,7 +82,7 @@ const AddNewExpenseModal = ({ onClose }) => {
     }
   };
 
-  if (isLoading || expenseIsLoading) {
+  if (isLoading) {
     return <ModalBody modal={<DnaLoader />} />;
   }
   return (
@@ -107,7 +107,7 @@ const AddNewExpenseModal = ({ onClose }) => {
               <div className="w-full">
                 <Input
                   placeholder="About New Expense"
-                  className="p-6"
+                  className="p-6 rounded"
                   {...register("expenseName", {
                     required: "Expense name is required",
                   })}
@@ -130,7 +130,7 @@ const AddNewExpenseModal = ({ onClose }) => {
                     render={({ field }) => (
                       <Select onValueChange={field.onChange}>
                         <SelectTrigger
-                          className="p-6"
+                          className="p-6 rounded"
                           aria-label="Select Category"
                         >
                           <SelectValue placeholder="Select Category" />
@@ -156,7 +156,7 @@ const AddNewExpenseModal = ({ onClose }) => {
                   <Input
                     placeholder="Expense Amount"
                     type="number"
-                    className="p-6"
+                    className="p-6 rounded"
                     {...register("expenseAmount", {
                       required: "Expense amount is required",
                       min: {
@@ -192,7 +192,7 @@ const AddNewExpenseModal = ({ onClose }) => {
                         }}
                       >
                         <SelectTrigger
-                          className="w-full p-6"
+                          className="w-full p-6 rounded"
                           aria-label="Select Wallet"
                         >
                           <SelectValue placeholder="Select Wallet" />
@@ -238,7 +238,7 @@ const AddNewExpenseModal = ({ onClose }) => {
                           <div
                             onClick={() => setIsOpen(!isOpen)}
                             className={cn(
-                              "w-full p-3 border cursor-pointer text-left font-normal",
+                              "w-full p-3 border cursor-pointer text-left font-normal rounded",
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -248,7 +248,7 @@ const AddNewExpenseModal = ({ onClose }) => {
                               : "Pick a date"}
                           </div>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0">
+                        <PopoverContent className="w-auto p-0 rounded">
                           <Calendar
                             mode="single"
                             selected={field.value}
@@ -274,10 +274,15 @@ const AddNewExpenseModal = ({ onClose }) => {
             <CardFooter className="mt-6">
               <Button
                 type="submit"
-                className="w-full font-semibold flex items-center justify-center gap-2"
+                className="w-full font-semibold flex items-center justify-center gap-2 rounded"
               >
-                <PlusCircle className="h-5 w-5" />
-                Add Expense
+                {expenseIsLoading ? (
+                  <Loader />
+                ) : (
+                  <>
+                    <PlusCircle className="h-5 w-5" /> Add Expense
+                  </>
+                )}
               </Button>
             </CardFooter>
           </form>

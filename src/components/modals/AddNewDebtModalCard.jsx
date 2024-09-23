@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { PlusCircle, XCircle, CalendarIcon } from "lucide-react";
+import { PlusCircle, XCircle, CalendarIcon, Loader } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import {
@@ -17,8 +17,6 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { useAddNewDebtMutation } from "@/redux/api/finance-api";
-import ModalBody from "./modalBody/ModalBody";
-import DnaLoader from "../loader/loader";
 
 const AddNewDebtModal = ({ onClose }) => {
   const { user } = useSelector((state) => state.user);
@@ -32,10 +30,6 @@ const AddNewDebtModal = ({ onClose }) => {
     control,
   } = useForm();
   const [isOpen, setIsOpen] = useState(false);
-
-  if (isLoading) {
-    return <ModalBody modal={<DnaLoader />} />;
-  }
 
   const onSubmit = async (data) => {
     data.debtPaid = false;
@@ -69,7 +63,7 @@ const AddNewDebtModal = ({ onClose }) => {
               <div className="w-full">
                 <Input
                   placeholder="Name of owner "
-                  className="p-6"
+                  className="p-6 rounded"
                   {...register("debtOwnerName", {
                     required: "Owner name is required",
                   })}
@@ -88,7 +82,7 @@ const AddNewDebtModal = ({ onClose }) => {
                   <Input
                     placeholder="Debt Amount"
                     type="number"
-                    className="p-6"
+                    className="p-6 rounded"
                     {...register("debtAmount", {
                       required: "Debt amount is required",
                       min: {
@@ -115,7 +109,7 @@ const AddNewDebtModal = ({ onClose }) => {
                           <div
                             onClick={() => setIsOpen(!isOpen)}
                             className={cn(
-                              "w-full p-3 border cursor-pointer text-left font-normal",
+                              "w-full p-3 border cursor-pointer text-left font-normal rounded",
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -125,7 +119,7 @@ const AddNewDebtModal = ({ onClose }) => {
                               : "Pick a date"}
                           </div>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0">
+                        <PopoverContent className="w-auto p-0 rounded">
                           <Calendar
                             mode="single"
                             selected={field.value}
@@ -151,10 +145,16 @@ const AddNewDebtModal = ({ onClose }) => {
             <CardFooter className="mt-6">
               <Button
                 type="submit"
-                className="w-full font-semibold flex items-center justify-center gap-2"
+                className="w-full flex items-center justify-center gap-2 rounded font-bold"
               >
-                <PlusCircle className="h-5 w-5" />
-                Add Debt
+                {isLoading ? (
+                  <Loader />
+                ) : (
+                  <>
+                    <PlusCircle className="h-5 w-5" />
+                    Add Debt
+                  </>
+                )}
               </Button>
             </CardFooter>
           </form>

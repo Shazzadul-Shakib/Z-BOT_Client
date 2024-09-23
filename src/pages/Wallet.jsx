@@ -13,17 +13,21 @@ const Wallet = () => {
   const { data: allWalletsResponse, isLoading } = useGetAllWalletQuery(
     user._id
   );
-
-  const allWallets = allWalletsResponse?.data ?? [];
   const [isWalletCardOpen, toggleWalletCardOn, toggleWalletCardOff] =
     useToggle();
 
   if (isLoading) {
     return <ModalBody modal={<DnaLoader />} />;
   }
+
+  const allWallets = allWalletsResponse?.data ?? [];
+  const sortedWallets = allWallets?.slice().sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6 ">
-      {allWallets.map((wallet) => (
+      {sortedWallets?.map((wallet) => (
         <WalletCard key={wallet._id} Info={wallet} />
       ))}
       <AddNewWalletCard
