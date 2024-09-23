@@ -88,9 +88,7 @@ const Expense = () => {
         <CardHeader className="flex-row justify-between mr-0 md:mr-4">
           <div>
             <CardTitle className="text-sm font-normal md:text-2xl md:font-medium">
-              Expense History -{" "}
-              {months.find((m) => m.value === month)?.name || "Current Month"}
-              2024
+              Expense History
             </CardTitle>
             <CardDescription className="mt-2 text-xs md:text-base">
               Manage your Expenses and view their status.

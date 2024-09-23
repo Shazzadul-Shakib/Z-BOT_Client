@@ -10,7 +10,7 @@ import { DollarSign, CreditCard } from "lucide-react";
 const WalletCard = ({ Info }) => {
   const { walletName, walletBalance, initialBalance } = Info;
   return (
-    <Card className="py-2">
+    <Card className="py-2 min-w-[240px]">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-2xl font-semibold">{walletName}</CardTitle>
         <CreditCard className="h-8 w-8 text-orange-300" />

@@ -54,7 +54,7 @@ const MainLayout = () => {
   }, [error, handleLogout]);
 
   if (isLoading) {
-    return <ModalBody modal={<DnaLoader/>}/>;
+    return <ModalBody modal={<DnaLoader />} />;
   }
 
   return (
@@ -176,7 +176,7 @@ const MainLayout = () => {
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="rounded">
               <DropdownMenuItem>
                 <div className="text-center text-orange-300 my-2">
                   <h1 className=" text-lg font-bold px-2">{user?.userName}</h1>
@@ -184,9 +184,12 @@ const MainLayout = () => {
                 </div>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={handleLogout}
+                className="flex justify-center items-center cursor-pointer"
+              >
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

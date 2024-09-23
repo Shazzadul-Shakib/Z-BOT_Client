@@ -51,7 +51,7 @@ const months = [
 
 const ExpenseSummary = () => {
   const { user } = useSelector((state) => state.user);
-  const [month, setMonth] = useState(new Date().getMonth() + 1); // Default to current month
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
   const handleMonthChange = async (monthValue) => {
     setMonth(monthValue);
   };
@@ -88,9 +88,7 @@ const ExpenseSummary = () => {
   return (
     <Card>
       <CardHeader className="grid grid-cols-2 space-y-0">
-        <CardTitle className="text-xl font-semibold">
-          Expense Summary
-        </CardTitle>
+        <CardTitle className="text-xl font-semibold">Expense Summary</CardTitle>
         <div className="flex justify-end">
           <Controller
             name="month"
