@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLoginUserMutation } from "@/redux/api/users-api";
@@ -19,7 +25,7 @@ const Login = () => {
     setError,
     formState: { errors },
   } = useForm();
-  const [loginUser,{isLoading}] = useLoginUserMutation();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -42,6 +48,15 @@ const Login = () => {
         type: "manual",
         message: errorMessage,
       });
+    }
+  };
+
+  const handleDemoUserLogin = async () => {
+    const data = { userEmail: "bonol26180@skrak.com", password: "123456" };
+    const result = await loginUser(data);
+    if (result?.data?.success) {
+      dispatch(setUser(result?.data?.data));
+      navigate("/");
     }
   };
 
@@ -97,7 +112,7 @@ const Login = () => {
               type="submit"
               className="w-full rounded font-bold text-background"
             >
-              {isLoading ? <Loader/> :"Login"}
+              {isLoading ? <Loader /> : "Login"}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">
@@ -107,6 +122,14 @@ const Login = () => {
             </Link>
           </div>
         </CardContent>
+        <CardFooter className="flex justify-center items-center">
+          <p
+            onClick={handleDemoUserLogin}
+            className=" text-sm font-semibold text-primary underline cursor-pointer"
+          >
+            Demo Acccount
+          </p>
+        </CardFooter>
       </Card>
     </div>
   );
