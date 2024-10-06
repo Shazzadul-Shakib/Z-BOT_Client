@@ -16,6 +16,7 @@ import Savings from "@/pages/Savings";
 import Debt from "@/pages/Debt";
 import Dashboard from "@/pages/Dasboard";
 import ManageWallet from "@/pages/ManageWallet";
+import WalletHome from "@/pages/WalletHome";
 
 export const router = createBrowserRouter([
   {
@@ -68,8 +69,12 @@ export const router = createBrowserRouter([
           },
           {
             path: "wallet",
-            element: <Wallet />,
+            element: <WalletHome />,
             children:[
+              {
+                index:true,
+                element:<Wallet/>
+              },
               {
                 path:"manage-wallets",
                 element:<ManageWallet/>
