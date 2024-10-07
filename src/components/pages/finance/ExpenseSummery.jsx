@@ -70,7 +70,7 @@ const ExpenseSummary = () => {
   }
 
   const Info = allExpensesResponse?.data;
-  const summedData = Info.reduce((acc, item) => {
+  const summedData = Info?.reduce((acc, item) => {
     const category = item.expenseCategory.toLowerCase();
     if (!acc[category]) {
       acc[category] = { category, expenseAmount: 0 };
