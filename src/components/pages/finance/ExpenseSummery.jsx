@@ -29,7 +29,7 @@ const chartConfig = {
   vehicle: { label: "Vehicle", color: "hsl(var(--chart-3))" },
   mobile: { label: "Mobile", color: "hsl(var(--chart-4))" },
   shopping: { label: "Shopping", color: "hsl(var(--chart-5))" },
-  education: { label: "Education", color: "hsl(var(--chart-3))" },
+  debt: { label: "Debt", color: "hsl(var(--chart-3))" },
   savings: { label: "Savings", color: "hsl(var(--chart-2))" },
   others: { label: "Others", color: "hsl(var(--chart-1))" },
 };
@@ -149,7 +149,6 @@ const ExpenseSummary = () => {
               strokeWidth={2}
               radius={5}
               barSize={40}
-              activeIndex={2}
               activeBar={({ ...props }) => (
                 <Rectangle
                   {...props}

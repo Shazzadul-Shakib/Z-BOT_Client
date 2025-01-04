@@ -82,7 +82,7 @@ const AddNewExpenseModal = ({ onClose }) => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || expenseIsLoading) {
     return <ModalBody modal={<DnaLoader />} />;
   }
   return (
@@ -137,8 +137,8 @@ const AddNewExpenseModal = ({ onClose }) => {
                         </SelectTrigger>
                         <SelectContent>
                           {categories.map((item) => (
-                            <SelectItem key={item.id} value={item.cValue}>
-                              {item.category}
+                            <SelectItem key={item.id} value={item?.cValue}>
+                              {item?.category}
                             </SelectItem>
                           ))}
                         </SelectContent>
