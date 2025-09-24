@@ -52,7 +52,7 @@ const Login = () => {
   };
 
   const handleDemoUserLogin = async () => {
-    const data = { userEmail: "bonol26180@skrak.com", password: "123456" };
+    const data = { userEmail: "doligiy180@dawhe.com", password: "123456" };
     const result = await loginUser(data);
     if (result?.data?.success) {
       dispatch(setUser(result?.data?.data));
